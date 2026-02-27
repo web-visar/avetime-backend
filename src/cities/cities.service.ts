@@ -3,7 +3,6 @@ import { InjectEntityManager } from '@nestjs/typeorm';
 import { IAutocompleteOption } from 'src/core/interfaces/autocomplete-option.interface';
 import { EntityManager } from 'typeorm';
 import { City } from './entities/city.entity';
-import { Country } from 'src/countries/entities/country.entity';
 
 @Injectable()
 export class CitiesService {
@@ -21,13 +20,13 @@ export class CitiesService {
       .take(10)
       .getRawMany();
 
-    console.log('Found cities:', cities);
     return cities.map((data) => ({
       text: data.city_name,
-      value: data.city_id,
+      value: data.city_cityGroupId,
       meta: {
         countryName: data.country_name,
         countryCode: data.country_code,
+        valueIs: 'cityGroupId',
       },
     }));
   }
