@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
-import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AcceptLanguageResolver, CookieResolver, I18nModule, I18nValidationExceptionFilter, I18nValidationPipe } from 'nestjs-i18n';
 import path from 'path';
@@ -12,6 +11,7 @@ import { BusinessImagesModule } from './business-images/business-images.module';
 import { BusinessesModule } from './businesses/businesses.module';
 import { CitiesModule } from './cities/cities.module';
 import { CookiesModule } from './cookies/cookies.module';
+import { CoreModule } from './core/core.module';
 import { CountriesModule } from './countries/countries.module';
 import { SeedModule } from './database/seeds/seed.module';
 import { EmployeeBreaksModule } from './employee-breaks/employee-breaks.module';
@@ -26,7 +26,6 @@ import { ServiceCategoriesModule } from './service-categories/service-categories
 import { ServicesModule } from './services/services.module';
 import { TimezonesModule } from './timezones/timezones.module';
 import { UsersModule } from './users/users.module';
-import { CoreModule } from './core/core.module';
 
 @Module({
   imports: [
@@ -55,13 +54,6 @@ import { CoreModule } from './core/core.module';
         watch: true,
       },
       resolvers: [new CookieResolver(['lang']), AcceptLanguageResolver],
-    }),
-    JwtModule.registerAsync({
-      global: true,
-      useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'),
-      }),
-      inject: [ConfigService],
     }),
     UsersModule,
     AuthModule,

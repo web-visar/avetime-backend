@@ -1,11 +1,10 @@
-import { Controller, Post, Body, Get, Res, Req, HttpCode, HttpStatus, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, Res, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { Request, Response } from 'express';
 import { AuthService } from './auth.service';
-import { LoginDto, RegisterDto } from './dto';
-import { Public } from './decorators';
-import type { AuthenticatedUser } from './interfaces';
 import { COOKIE_ACCESS_TOKEN, COOKIE_REFRESH_TOKEN } from './constantes';
+import { Public } from './decorators';
+import { LoginDto, RegisterDto } from './dto';
 
 @Controller('auth')
 export class AuthController {
