@@ -10,9 +10,10 @@ export class CitiesService {
   constructor(@InjectEntityManager() private readonly entityManager: EntityManager) {}
 
   async search(query: string, lang: string): Promise<IAutocompleteOption[]> {
+    console.log('Searching cities with query:', query, 'and lang:', lang);
     const cities = await this.entityManager
       .createQueryBuilder(City, 'city')
-      .leftJoinAndSelect(Country, 'country', 'country.code = city.countryCode AND country.lang = :countryLang', { countryLang: lang })
+      .leftJoinAndSelect('city.country', 'country', 'country.code = city.countryCode AND country.lang = :countryLang', { countryLang: lang })
       .where('city.lang = :lang OR city.lang IS NULL', { lang })
       .addSelect('word_similarity(city.name, :query)', 'similarity')
       .setParameter('query', query)

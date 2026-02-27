@@ -23,7 +23,7 @@ export class ServiceCategoriesController {
 
   @Public()
   @Get('search')
-  search(@Query('query') query: string, @Cookies('lang') lang: string) {
+  search(@Query('query') query: string, @Query('lang') lang: string) {
     return this.serviceCategoriesService.search(query, lang);
   }
 

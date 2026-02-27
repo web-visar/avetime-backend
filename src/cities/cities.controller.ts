@@ -1,7 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { CitiesService } from './cities.service';
-import { Cookies } from 'src/core/decorators/cookies.decorator';
 import { Public } from 'src/auth/decorators';
+import { CitiesService } from './cities.service';
 
 @Controller('cities')
 export class CitiesController {
@@ -9,7 +8,7 @@ export class CitiesController {
 
   @Public()
   @Get('search')
-  search(@Query('query') query: string, @Cookies('lang') lang: string) {
+  search(@Query('query') query: string, @Query('lang') lang: string) {
     return this.citiesService.search(query, lang);
   }
 
