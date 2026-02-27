@@ -6,7 +6,7 @@ import { Country } from './entities/country.entity';
 @Injectable()
 export class CountriesService {
   constructor(private readonly entityManager: EntityManager) {}
-  async search(term: string, lang: string) : Promise<IAutocompleteOption[]> {
+  async search(term: string, lang: string): Promise<IAutocompleteOption[]> {
     const countries = await this.entityManager
       .createQueryBuilder(Country, 'country')
       .where(`country.lang = :lang`, { lang })
@@ -21,8 +21,6 @@ export class CountriesService {
       value: country.code,
       meta: {
         nativeName: country.nativeName,
-        phoneCode: country.phoneCode,
-        flag: country.flag,
       },
     }));
   }

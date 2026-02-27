@@ -21,12 +21,6 @@ export class Country {
   @Column({ type: 'varchar', length: 100, nullable: true })
   nativeName: string; // Name in native language
 
-  @Column({ type: 'varchar', length: 10, nullable: true })
-  phoneCode: string;
-
-  @Column({ type: 'varchar', length: 10, nullable: true })
-  flag: string; // Flag emoji or code
-
   @OneToMany(() => City, (city) => city.country)
   cities: City[];
 

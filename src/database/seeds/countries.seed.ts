@@ -5,8 +5,6 @@ export const countriesData = [
     name: 'Switzerland',
     lang: 'en',
     nativeName: 'Switzerland',
-    phoneCode: '+41',
-    flag: '🇨🇭',
     isActive: true,
   },
   {
@@ -14,8 +12,6 @@ export const countriesData = [
     name: 'Suisse',
     lang: 'fr',
     nativeName: 'Suisse',
-    phoneCode: '+41',
-    flag: '🇨🇭',
     isActive: true,
   },
   {
@@ -23,8 +19,6 @@ export const countriesData = [
     name: 'Schweiz',
     lang: 'de',
     nativeName: 'Schweiz',
-    phoneCode: '+41',
-    flag: '🇨🇭',
     isActive: true,
   },
   {
@@ -32,8 +26,6 @@ export const countriesData = [
     name: 'Svizzera',
     lang: 'it',
     nativeName: 'Svizzera',
-    phoneCode: '+41',
-    flag: '🇨🇭',
     isActive: true,
   },
   {
@@ -41,8 +33,6 @@ export const countriesData = [
     name: 'Zvicra',
     lang: 'sq',
     nativeName: 'Zvicër',
-    phoneCode: '+41',
-    flag: '🇨🇭',
     isActive: true,
   },
   {
@@ -50,8 +40,6 @@ export const countriesData = [
     name: 'Suiza',
     lang: 'es',
     nativeName: 'Schweiz',
-    phoneCode: '+41',
-    flag: '🇨🇭',
     isActive: true,
   },
 
@@ -61,8 +49,6 @@ export const countriesData = [
     name: 'France',
     lang: 'en',
     nativeName: 'France',
-    phoneCode: '+33',
-    flag: '🇫🇷',
     isActive: true,
   },
   {
@@ -70,8 +56,6 @@ export const countriesData = [
     name: 'France',
     lang: 'fr',
     nativeName: 'France',
-    phoneCode: '+33',
-    flag: '🇫🇷',
     isActive: true,
   },
   {
@@ -79,8 +63,6 @@ export const countriesData = [
     name: 'Frankreich',
     lang: 'de',
     nativeName: 'France',
-    phoneCode: '+33',
-    flag: '🇫🇷',
     isActive: true,
   },
   {
@@ -88,8 +70,6 @@ export const countriesData = [
     name: 'Francia',
     lang: 'it',
     nativeName: 'France',
-    phoneCode: '+33',
-    flag: '🇫🇷',
     isActive: true,
   },
   {
@@ -97,8 +77,6 @@ export const countriesData = [
     name: 'Franca',
     lang: 'sq',
     nativeName: 'France',
-    phoneCode: '+33',
-    flag: '🇫🇷',
     isActive: true,
   },
   {
@@ -106,8 +84,6 @@ export const countriesData = [
     name: 'Francia',
     lang: 'es',
     nativeName: 'France',
-    phoneCode: '+33',
-    flag: '🇫🇷',
     isActive: true,
   },
 
@@ -117,8 +93,6 @@ export const countriesData = [
     name: 'United Kingdom',
     lang: 'en',
     nativeName: 'United Kingdom',
-    phoneCode: '+44',
-    flag: '🇬🇧',
     isActive: true,
   },
   {
@@ -126,8 +100,6 @@ export const countriesData = [
     name: 'Royaume-Uni',
     lang: 'fr',
     nativeName: 'United Kingdom',
-    phoneCode: '+44',
-    flag: '🇬🇧',
     isActive: true,
   },
   {
@@ -135,8 +107,6 @@ export const countriesData = [
     name: 'Vereinigtes Königreich',
     lang: 'de',
     nativeName: 'United Kingdom',
-    phoneCode: '+44',
-    flag: '🇬🇧',
     isActive: true,
   },
   {
@@ -144,8 +114,6 @@ export const countriesData = [
     name: 'Regno Unito',
     lang: 'it',
     nativeName: 'United Kingdom',
-    phoneCode: '+44',
-    flag: '🇬🇧',
     isActive: true,
   },
   {
@@ -153,8 +121,6 @@ export const countriesData = [
     name: 'Mbretëria e Bashkuar',
     lang: 'sq',
     nativeName: 'United Kingdom',
-    phoneCode: '+44',
-    flag: '🇬🇧',
     isActive: true,
   },
   {
@@ -162,8 +128,6 @@ export const countriesData = [
     name: 'Reino Unido',
     lang: 'es',
     nativeName: 'United Kingdom',
-    phoneCode: '+44',
-    flag: '🇬🇧',
     isActive: true,
   },
 
@@ -173,8 +137,6 @@ export const countriesData = [
     name: 'Kosovo',
     lang: 'en',
     nativeName: 'Kosova',
-    phoneCode: '+383',
-    flag: '🇽🇰',
     isActive: true,
   },
   {
@@ -182,8 +144,6 @@ export const countriesData = [
     name: 'Kosovo',
     lang: 'fr',
     nativeName: 'Kosova',
-    phoneCode: '+383',
-    flag: '🇽🇰',
     isActive: true,
   },
   {
@@ -191,8 +151,6 @@ export const countriesData = [
     name: 'Kosovo',
     lang: 'de',
     nativeName: 'Kosova',
-    phoneCode: '+383',
-    flag: '🇽🇰',
     isActive: true,
   },
   {
@@ -200,8 +158,6 @@ export const countriesData = [
     name: 'Kosovo',
     lang: 'it',
     nativeName: 'Kosova',
-    phoneCode: '+383',
-    flag: '🇽🇰',
     isActive: true,
   },
   {
@@ -209,8 +165,6 @@ export const countriesData = [
     name: 'Kosovë',
     lang: 'sq',
     nativeName: 'Kosova',
-    phoneCode: '+383',
-    flag: '🇽🇰',
     isActive: true,
   },
   {
@@ -218,8 +172,6 @@ export const countriesData = [
     name: 'Kosovo',
     lang: 'es',
     nativeName: 'Kosova',
-    phoneCode: '+383',
-    flag: '🇽🇰',
     isActive: true,
   },
 
@@ -229,8 +181,6 @@ export const countriesData = [
     name: 'Albania',
     lang: 'en',
     nativeName: 'Shqipëri',
-    phoneCode: '+355',
-    flag: '🇦🇱',
     isActive: true,
   },
   {
@@ -238,8 +188,6 @@ export const countriesData = [
     name: 'Albanie',
     lang: 'fr',
     nativeName: 'Shqipëri',
-    phoneCode: '+355',
-    flag: '🇦🇱',
     isActive: true,
   },
   {
@@ -247,8 +195,6 @@ export const countriesData = [
     name: 'Albanien',
     lang: 'de',
     nativeName: 'Shqipëri',
-    phoneCode: '+355',
-    flag: '🇦🇱',
     isActive: true,
   },
   {
@@ -256,8 +202,6 @@ export const countriesData = [
     name: 'Albania',
     lang: 'it',
     nativeName: 'Shqipëri',
-    phoneCode: '+355',
-    flag: '🇦🇱',
     isActive: true,
   },
   {
@@ -265,8 +209,6 @@ export const countriesData = [
     name: 'Shqipëri',
     lang: 'sq',
     nativeName: 'Shqipëri',
-    phoneCode: '+355',
-    flag: '🇦🇱',
     isActive: true,
   },
   {
@@ -274,8 +216,6 @@ export const countriesData = [
     name: 'Albania',
     lang: 'es',
     nativeName: 'Shqipëri',
-    phoneCode: '+355',
-    flag: '🇦🇱',
     isActive: true,
   },
 
@@ -285,8 +225,6 @@ export const countriesData = [
     name: 'Austria',
     lang: 'en',
     nativeName: 'Österreich',
-    phoneCode: '+43',
-    flag: '🇦🇹',
     isActive: true,
   },
   {
@@ -294,8 +232,6 @@ export const countriesData = [
     name: 'Autriche',
     lang: 'fr',
     nativeName: 'Österreich',
-    phoneCode: '+43',
-    flag: '🇦🇹',
     isActive: true,
   },
   {
@@ -303,8 +239,6 @@ export const countriesData = [
     name: 'Österreich',
     lang: 'de',
     nativeName: 'Österreich',
-    phoneCode: '+43',
-    flag: '🇦🇹',
     isActive: true,
   },
   {
@@ -312,8 +246,6 @@ export const countriesData = [
     name: 'Austria',
     lang: 'it',
     nativeName: 'Österreich',
-    phoneCode: '+43',
-    flag: '🇦🇹',
     isActive: true,
   },
   {
@@ -321,8 +253,6 @@ export const countriesData = [
     name: 'Austri',
     lang: 'sq',
     nativeName: 'Österreich',
-    phoneCode: '+43',
-    flag: '🇦🇹',
     isActive: true,
   },
   {
@@ -330,8 +260,6 @@ export const countriesData = [
     name: 'Austria',
     lang: 'es',
     nativeName: 'Österreich',
-    phoneCode: '+43',
-    flag: '🇦🇹',
     isActive: true,
   },
 
@@ -341,8 +269,6 @@ export const countriesData = [
     name: 'Germany',
     lang: 'en',
     nativeName: 'Deutschland',
-    phoneCode: '+49',
-    flag: '🇩🇪',
     isActive: true,
   },
   {
@@ -350,8 +276,6 @@ export const countriesData = [
     name: 'Allemagne',
     lang: 'fr',
     nativeName: 'Deutschland',
-    phoneCode: '+49',
-    flag: '🇩🇪',
     isActive: true,
   },
   {
@@ -359,8 +283,6 @@ export const countriesData = [
     name: 'Deutschland',
     lang: 'de',
     nativeName: 'Deutschland',
-    phoneCode: '+49',
-    flag: '🇩🇪',
     isActive: true,
   },
   {
@@ -368,8 +290,6 @@ export const countriesData = [
     name: 'Germania',
     lang: 'it',
     nativeName: 'Deutschland',
-    phoneCode: '+49',
-    flag: '🇩🇪',
     isActive: true,
   },
   {
@@ -377,8 +297,6 @@ export const countriesData = [
     name: 'Gjermani',
     lang: 'sq',
     nativeName: 'Deutschland',
-    phoneCode: '+49',
-    flag: '🇩🇪',
     isActive: true,
   },
   {
@@ -386,8 +304,6 @@ export const countriesData = [
     name: 'Alemania',
     lang: 'es',
     nativeName: 'Deutschland',
-    phoneCode: '+49',
-    flag: '🇩🇪',
     isActive: true,
   },
   // Spain multiple languages
@@ -396,8 +312,6 @@ export const countriesData = [
     name: 'Spain',
     lang: 'en',
     nativeName: 'España',
-    phoneCode: '+34',
-    flag: '🇪🇸',
     isActive: true,
   },
   {
@@ -405,8 +319,6 @@ export const countriesData = [
     name: 'Espagne',
     lang: 'fr',
     nativeName: 'España',
-    phoneCode: '+34',
-    flag: '🇪🇸',
     isActive: true,
   },
   {
@@ -414,8 +326,6 @@ export const countriesData = [
     name: 'Spanien',
     lang: 'de',
     nativeName: 'España',
-    phoneCode: '+34',
-    flag: '🇪🇸',
     isActive: true,
   },
   {
@@ -423,8 +333,6 @@ export const countriesData = [
     name: 'Spagna',
     lang: 'it',
     nativeName: 'España',
-    phoneCode: '+34',
-    flag: '🇪🇸',
     isActive: true,
   },
   {
@@ -432,8 +340,6 @@ export const countriesData = [
     name: 'Spanja',
     lang: 'sq',
     nativeName: 'España',
-    phoneCode: '+34',
-    flag: '🇪🇸',
     isActive: true,
   },
   {
@@ -441,8 +347,6 @@ export const countriesData = [
     name: 'España',
     lang: 'es',
     nativeName: 'España',
-    phoneCode: '+34',
-    flag: '🇪🇸',
     isActive: true,
   },
   // Italy multiple languages
@@ -451,8 +355,6 @@ export const countriesData = [
     name: 'Italy',
     lang: 'en',
     nativeName: 'Italia',
-    phoneCode: '+39',
-    flag: '🇮🇹',
     isActive: true,
   },
   {
@@ -460,8 +362,6 @@ export const countriesData = [
     name: 'Italie',
     lang: 'fr',
     nativeName: 'Italia',
-    phoneCode: '+39',
-    flag: '🇮🇹',
     isActive: true,
   },
   {
@@ -469,8 +369,6 @@ export const countriesData = [
     name: 'Italien',
     lang: 'de',
     nativeName: 'Italia',
-    phoneCode: '+39',
-    flag: '🇮🇹',
     isActive: true,
   },
   {
@@ -478,8 +376,6 @@ export const countriesData = [
     name: 'Italia',
     lang: 'it',
     nativeName: 'Italia',
-    phoneCode: '+39',
-    flag: '🇮🇹',
     isActive: true,
   },
   {
@@ -487,8 +383,6 @@ export const countriesData = [
     name: 'Italia',
     lang: 'sq',
     nativeName: 'Italia',
-    phoneCode: '+39',
-    flag: '🇮🇹',
     isActive: true,
   },
   {
@@ -496,8 +390,6 @@ export const countriesData = [
     name: 'Italia',
     lang: 'es',
     nativeName: 'Italia',
-    phoneCode: '+39',
-    flag: '🇮🇹',
     isActive: true,
   },
 ];
