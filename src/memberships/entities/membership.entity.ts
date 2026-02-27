@@ -31,7 +31,7 @@ export class Membership {
   business: Business;
 
   @Column({ default: true })
-  isActive: boolean;
+  isDefault: boolean;
 
   @Column({ type: 'timestamp', nullable: true })
   invitedAt: Date;

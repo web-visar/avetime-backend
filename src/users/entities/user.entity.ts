@@ -1,6 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Membership } from '../../memberships/entities/membership.entity';
-import { Role } from '../../roles/entities/role.entity';
 
 @Entity('t_users')
 export class User {

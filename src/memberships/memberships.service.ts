@@ -28,7 +28,8 @@ export class MembershipsService {
     const membership = this.entityManager.create(Membership, {
       userId: createMembershipDto.userId,
       businessId: createMembershipDto.businessId,
-      isActive: createMembershipDto.isActive ?? true,
+      role: createMembershipDto.role,
+      isDefault: createMembershipDto.isDefault ?? true,
       acceptedAt: new Date(),
     });
 
@@ -87,8 +88,8 @@ export class MembershipsService {
   async update(id: string, updateMembershipDto: UpdateMembershipDto): Promise<Membership> {
     const membership = await this.findOne(id);
 
-    if (updateMembershipDto.isActive !== undefined) {
-      membership.isActive = updateMembershipDto.isActive;
+    if (updateMembershipDto.isDefault !== undefined) {
+      membership.isDefault = updateMembershipDto.isDefault;
     }
 
     return this.entityManager.save(membership);

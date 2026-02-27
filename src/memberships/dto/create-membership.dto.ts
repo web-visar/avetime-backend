@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsUUID, IsBoolean } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsUUID, IsBoolean, IsEnum } from 'class-validator';
 
 export class CreateMembershipDto {
   @IsUUID()
@@ -9,7 +9,11 @@ export class CreateMembershipDto {
   @IsNotEmpty()
   businessId: string;
 
+  @IsNotEmpty()
+  @IsEnum(['superadmin', 'admin', 'user', 'customer'])
+  role: string;
+
   @IsBoolean()
   @IsOptional()
-  isActive?: boolean;
+  isDefault?: boolean;
 }
