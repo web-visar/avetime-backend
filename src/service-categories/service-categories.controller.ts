@@ -21,6 +21,12 @@ export class ServiceCategoriesController {
     return this.serviceCategoriesService.findAll(lang || 'en');
   }
 
+  @Public()
+  @Get('search')
+  search(@Query('query') query: string, @Cookies('lang') lang: string) {
+    return this.serviceCategoriesService.search(query, lang);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.serviceCategoriesService.findOne(id);

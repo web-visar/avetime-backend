@@ -4,6 +4,7 @@ import { EntityManager } from 'typeorm';
 import { CreateServiceCategoryDto } from './dto/create-service-category.dto';
 import { UpdateServiceCategoryDto } from './dto/update-service-category.dto';
 import { ServiceCategory } from './entities/service-category.entity';
+import { IAutocompleteOption } from 'src/core/interfaces/autocomplete-option.interface';
 
 @Injectable()
 export class ServiceCategoriesService {
@@ -26,6 +27,24 @@ export class ServiceCategoriesService {
 
     const serviceCategory = this.entityManager.create(ServiceCategory, createServiceCategoryDto);
     return await this.entityManager.save(serviceCategory);
+  }
+
+  async search(query: string, lang: string): Promise<IAutocompleteOption[]> {
+    const options = await this.entityManager
+      .createQueryBuilder(ServiceCategory, 'category')
+      .where('category.lang = :lang', { lang })
+      .andWhere('category.isActive = :isActive', { isActive: true })
+      .addSelect('word_similarity(category.name, :query)', 'similarity')
+      .setParameter('query', query)
+      .orderBy('similarity', 'DESC')
+      .addOrderBy('category.sortOrder', 'ASC')
+      .take(10)
+      .getMany();
+
+    return options.map((category) => ({
+      value: category.id,
+      text: category.name,
+    }));
   }
 
   async findAll(lang: string): Promise<ServiceCategory[]> {
