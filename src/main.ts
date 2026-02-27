@@ -4,10 +4,20 @@ import cookieParser from 'cookie-parser';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { RedisIoAdapter } from './core/adapters/redis-io.adapter';
 import { ConfigService } from '@nestjs/config';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const isProd = process.env.NODE_ENV === 'production';
 
+  const app = isProd
+    ? await NestFactory.create(AppModule, {
+        httpsOptions: {
+          key: readFileSync(join(__dirname, '..', 'ssl', 'key.pem')),
+          cert: readFileSync(join(__dirname, '..', 'ssl', 'cert.pem')),
+        },
+      })
+    : await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
   app.use(cookieParser());
