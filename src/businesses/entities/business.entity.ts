@@ -4,8 +4,8 @@ import { User } from '../../users/entities/user.entity';
 import { Employee } from '../../employees/entities/employee.entity';
 import { Service } from '../../services/entities/service.entity';
 import { OpeningHour } from '../../opening-hours/entities/opening-hour.entity';
-import { BusinessLogo } from 'src/business-logos/entities/business-logo.entity';
 import { Membership } from '../../memberships/entities/membership.entity';
+import { BusinessImage } from 'src/business-images/entities/business-image.entity';
 
 @Entity('t_businesses')
 export class Business {
@@ -26,10 +26,10 @@ export class Business {
   owner: User;
 
   @Column({ type: 'uuid' })
-  cityId: string;
+  cityGroupId: string;
 
-  @ManyToOne(() => City, (city) => city.businesses, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'cityId' })
+  @ManyToOne(() => City, { onDelete: 'RESTRICT', createForeignKeyConstraints: false })
+  @JoinColumn([{ name: 'cityGroupId', referencedColumnName: 'cityGroupId' }])
   city: City;
 
   @Column({ length: 255 })
@@ -44,18 +44,8 @@ export class Business {
   @Column({ length: 255, nullable: true })
   website: string;
 
-  @Column({ type: 'uuid', nullable: true })
-  logoId: string;
-
-  @OneToOne(() => BusinessLogo, { nullable: true, cascade: true })
-  @JoinColumn({
-    name: 'logoId',
-    referencedColumnName: 'id',
-  })
-  logo: BusinessLogo;
-
-  @Column({ type: 'text', array: true, default: [] })
-  images: string[];
+  @OneToMany(() => BusinessImage, (businessImage) => businessImage.business)
+  images: BusinessImage[];
 
   @Column({ type: 'decimal', precision: 10, scale: 8, nullable: true })
   latitude: number;
