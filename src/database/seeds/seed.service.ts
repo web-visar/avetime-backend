@@ -52,7 +52,7 @@ export class SeedService {
   private async seedSuperAdminAndDefaultBusiness() {
     this.logger.log('Seeding superadmin user and default business...');
 
-    const superAdminEmail = this.configService.get<string>('DEFAULT_ADMIN_EMAIL', 'admin@leventime.com');
+    const superAdminEmail = this.configService.get<string>('DEFAULT_ADMIN_EMAIL', 'admin@avetime.com');
     const superAdminPassword = this.configService.get<string>('DEFAULT_ADMIN_PASSWORD', 'Admin123!');
     const superAdminFullName = this.configService.get<string>('DEFAULT_ADMIN_FULLNAME', 'Super Admin');
 
