@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import type { StringValue } from 'ms';
+import { AppContextProvider } from 'src/core/providers/context.provider';
 import { EntityManager } from 'typeorm';
 import { User } from '../users/entities/user.entity';
 import {
@@ -16,7 +17,6 @@ import {
 } from './constantes';
 import { LoginDto, RegisterDto } from './dto';
 import { AuthenticatedUser, JwtPayload, TokenPair } from './interfaces';
-import { AppContextProvider } from 'src/core/providers/context.provider';
 
 @Injectable()
 export class AuthService {

@@ -1,18 +1,32 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany, OneToOne } from 'typeorm';
-import { City } from '../../cities/entities/city.entity';
-import { User } from '../../users/entities/user.entity';
-import { Employee } from '../../employees/entities/employee.entity';
-import { Service } from '../../services/entities/service.entity';
-import { OpeningHour } from '../../opening-hours/entities/opening-hour.entity';
-import { Membership } from '../../memberships/entities/membership.entity';
 import { BusinessImage } from 'src/business-images/entities/business-image.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from 'typeorm';
+import { City } from '../../cities/entities/city.entity';
+import { Employee } from '../../employees/entities/employee.entity';
+import { Membership } from '../../memberships/entities/membership.entity';
+import { OpeningHour } from '../../opening-hours/entities/opening-hour.entity';
+import { Service } from '../../services/entities/service.entity';
+import { User } from '../../users/entities/user.entity';
 
 @Entity('t_businesses')
 export class Business {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 200 })
+  @Column({ type: 'varchar', length: 100 })
+  @Index({ unique: true })
+  link: string; // unique link for the business(E.g. for SEO and sharing purposes)
+
+  @Column({ type: 'varchar', length: 200 })
   name: string;
 
   @Column({ type: 'text', nullable: true })

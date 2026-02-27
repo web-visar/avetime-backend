@@ -11,7 +11,6 @@ import { BusinessImagesModule } from './business-images/business-images.module';
 import { BusinessesModule } from './businesses/businesses.module';
 import { CitiesModule } from './cities/cities.module';
 import { CookiesModule } from './cookies/cookies.module';
-import { CoreModule } from './core/core.module';
 import { CountriesModule } from './countries/countries.module';
 import { SeedModule } from './database/seeds/seed.module';
 import { EmployeeBreaksModule } from './employee-breaks/employee-breaks.module';
@@ -26,10 +25,10 @@ import { ServiceCategoriesModule } from './service-categories/service-categories
 import { ServicesModule } from './services/services.module';
 import { TimezonesModule } from './timezones/timezones.module';
 import { UsersModule } from './users/users.module';
+import { CoreModule } from './core/core.module';
 
 @Module({
   imports: [
-    CoreModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -55,6 +54,7 @@ import { UsersModule } from './users/users.module';
       },
       resolvers: [new CookieResolver(['lang']), AcceptLanguageResolver],
     }),
+    CoreModule,
     UsersModule,
     AuthModule,
     CitiesModule,
