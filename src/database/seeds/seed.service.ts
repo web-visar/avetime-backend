@@ -14,6 +14,7 @@ import { citiesData } from './cities.seed';
 import { countriesData } from './countries.seed';
 import { serviceCategoriesData } from './service-categories.seed';
 import { timezonesData } from './timezones.seed';
+import { Role } from 'src/roles/entities/role.entity';
 
 @Injectable()
 export class SeedService {
@@ -40,7 +41,7 @@ export class SeedService {
   private async seedRoles() {
     this.logger.log('Seeding roles...');
     const roles = ['superadmin', 'admin', 'user', 'customer'].map((role) => {
-      return this.entityManager.create('Role', { name: role });
+      return this.entityManager.create(Role, { name: role });
     });
     const seededRoles = await this.entityManager.save(roles);
     this.logger.log(`Created ${seededRoles.length} roles`);
@@ -55,37 +56,6 @@ export class SeedService {
     const superAdminPassword = this.configService.get<string>('DEFAULT_ADMIN_PASSWORD', 'Admin123!');
     const superAdminFullName = this.configService.get<string>('DEFAULT_ADMIN_FULLNAME', 'Super Admin');
 
-    const defaultBusinessName = this.configService.get<string>('DEFAULT_BUSINESS_NAME', 'Default Business');
-
-    const defaultBusiness = await this.entityManager.findOne(Business, {
-      where: { name: defaultBusinessName },
-    });
-
-    if (!defaultBusiness) {
-      const city = await this.entityManager.findOne(City, {
-        where: { name: 'Saint-Julien-en-Genevois', countryCode: 'FR' },
-      });
-      if (!city) {
-        this.logger.error('City for default business not found. Please seed cities first.');
-        return;
-      }
-      const business = this.entityManager.create(Business, {
-        name: defaultBusinessName,
-        description: '',
-        address: '1 allée de la feuillée',
-        phone: '+33648962801',
-        email: 'contact@avetime.com',
-        website: 'avetime.com',
-        latitude: 0,
-        longitude: 0,
-        isActive: true,
-        isVerified: true,
-        cityId: city.id,
-      });
-      await this.entityManager.save(business);
-      this.logger.log(`Created default business: ${defaultBusinessName}`);
-    }
-
     const existing = await this.entityManager.findOne(User, {
       where: { email: superAdminEmail },
     });
@@ -99,29 +69,16 @@ export class SeedService {
       });
       await this.entityManager.save(superAdmin);
       this.logger.log(`Created superadmin user: ${superAdminEmail}`);
+
+      // Assign superadmin role
+      const membership = this.entityManager.create(Membership, {
+        userId: superAdmin.id,
+        role: 'superadmin',
+      });
+      await this.entityManager.save(membership);
+      this.logger.log(`Created superadmin membership for user: ${superAdminEmail}`);
     } else {
       this.logger.log('Superadmin user already exists');
-    }
-
-    const membershipsCount = await this.entityManager.count(Membership);
-    if (membershipsCount === 0) {
-      const superAdmin = await this.entityManager.findOne(User, {
-        where: { email: superAdminEmail },
-      });
-      const defaultBusiness = await this.entityManager.findOne(Business, {
-        where: { name: defaultBusinessName },
-      });
-      if (superAdmin && defaultBusiness) {
-        const membership = this.entityManager.create(Membership, {
-          userId: superAdmin.id,
-          businessId: defaultBusiness.id,
-          isActive: true,
-          invitedAt: new Date(),
-          acceptedAt: new Date(),
-        });
-        await this.entityManager.save(membership);
-        this.logger.log(`Created membership for superadmin in default business`);
-      }
     }
 
     this.logger.log('Superadmin seeding completed');

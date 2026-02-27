@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, Unique } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Business } from '../../businesses/entities/business.entity';
+import { Role } from 'src/roles/entities/role.entity';
 
 @Entity('t_memberships')
 @Unique(['userId', 'businessId']) // A user can only have one membership per business
@@ -15,10 +16,17 @@ export class Membership {
   @JoinColumn({ name: 'userId' })
   user: User;
 
-  @Column({ type: 'uuid' })
+  @Column({ type: 'uuid', nullable: true })
+  role: string;
+
+  @ManyToOne(() => Role)
+  @JoinColumn({ name: 'role', referencedColumnName: 'name' })
+  roleEntity: Role;
+
+  @Column({ type: 'uuid', nullable: true })
   businessId: string;
 
-  @ManyToOne(() => Business, (business) => business.memberships, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Business, (business) => business.memberships, { onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'businessId' })
   business: Business;
 
