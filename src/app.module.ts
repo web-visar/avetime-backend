@@ -9,7 +9,6 @@ import { AppController } from './app.controller';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { AuthModule } from './auth/auth.module';
 import { BusinessImagesModule } from './business-images/business-images.module';
-import { BusinessLogosModule } from './business-logos/business-logos.module';
 import { BusinessesModule } from './businesses/businesses.module';
 import { CitiesModule } from './cities/cities.module';
 import { CookiesModule } from './cookies/cookies.module';
@@ -27,9 +26,11 @@ import { ServiceCategoriesModule } from './service-categories/service-categories
 import { ServicesModule } from './services/services.module';
 import { TimezonesModule } from './timezones/timezones.module';
 import { UsersModule } from './users/users.module';
+import { CoreModule } from './core/core.module';
 
 @Module({
   imports: [
+    CoreModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -79,7 +80,6 @@ import { UsersModule } from './users/users.module';
     ServiceCategoriesModule,
     BusinessImagesModule,
     EmployeePhotosModule,
-    BusinessLogosModule,
     MembershipsModule,
     CookiesModule,
     RolesModule,

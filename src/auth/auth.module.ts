@@ -3,6 +3,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './guards';
+import { AppContextProvider } from 'src/core/providers/context.provider';
 
 @Module({
   controllers: [AuthController],

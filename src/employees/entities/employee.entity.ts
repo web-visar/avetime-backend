@@ -7,6 +7,7 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -15,6 +16,7 @@ import { Business } from '../../businesses/entities/business.entity';
 import { EmployeeBreak } from '../../employee-breaks/entities/employee-break.entity';
 import { EmployeeSchedule } from '../../employee-schedules/entities/employee-schedule.entity';
 import { Service } from '../../services/entities/service.entity';
+import { EmployeePhoto } from 'src/employee-photos/entities/employee-photo.entity';
 
 @Entity('t_employees')
 export class Employee {
@@ -47,6 +49,13 @@ export class Employee {
 
   @OneToMany(() => EmployeeBreak, (breakTime) => breakTime.employee)
   breaks: EmployeeBreak[];
+
+  @Column({ type: 'uuid', nullable: true })
+  photoId: string;
+
+  @OneToOne(() => EmployeePhoto, (photo) => photo.employee, { nullable: true, onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'photoId', referencedColumnName: 'id' })
+  photo: EmployeePhoto;
 
   @CreateDateColumn()
   createdAt: Date;

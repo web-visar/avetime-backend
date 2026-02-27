@@ -16,6 +16,7 @@ import {
 } from './constantes';
 import { LoginDto, RegisterDto } from './dto';
 import { AuthenticatedUser, JwtPayload, TokenPair } from './interfaces';
+import { AppContextProvider } from 'src/core/providers/context.provider';
 
 @Injectable()
 export class AuthService {
@@ -23,6 +24,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     @InjectEntityManager() private readonly entityManager: EntityManager,
     private readonly configService: ConfigService,
+    private readonly appContext: AppContextProvider,
   ) {}
 
   async register(registerDto: RegisterDto): Promise<AuthenticatedUser> {
@@ -114,7 +116,11 @@ export class AuthService {
     }
   }
 
-  async getProfile(userId: string): Promise<AuthenticatedUser> {
+  async getProfile(): Promise<AuthenticatedUser> {
+    const userId = this.appContext.getUserId();
+    if (!userId) {
+      throw new UnauthorizedException('User not authenticated');
+    }
     const user = await this.entityManager.findOne(User, {
       where: { id: userId },
     });

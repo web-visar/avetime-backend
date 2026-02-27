@@ -1,4 +1,4 @@
-import { Injectable, Scope, Inject } from '@nestjs/common';
+import { Injectable, Scope, Inject, Global } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import type { Request } from 'express';
 import { MissingContextException } from '../exceptions/context.exception';

@@ -4,7 +4,6 @@ import type { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto';
 import { Public } from './decorators';
-import { CurrentUser } from './decorators';
 import type { AuthenticatedUser } from './interfaces';
 import { COOKIE_ACCESS_TOKEN, COOKIE_REFRESH_TOKEN } from './constantes';
 
@@ -79,8 +78,8 @@ export class AuthController {
   }
 
   @Get('me')
-  async getProfile(@CurrentUser() user: AuthenticatedUser) {
-    return this.authService.getProfile(user.id);
+  async getProfile() {
+    return this.authService.getProfile();
   }
 
   private setAuthCookies(response: Response, accessToken: string, refreshToken: string) {
