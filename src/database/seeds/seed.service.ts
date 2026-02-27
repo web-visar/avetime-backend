@@ -2,19 +2,18 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
+import { Business } from 'src/businesses/entities/business.entity';
+import { Membership } from 'src/memberships/entities/membership.entity';
+import { User } from 'src/users/entities/user.entity';
 import { EntityManager } from 'typeorm';
 import { City } from '../../cities/entities/city.entity';
 import { Country } from '../../countries/entities/country.entity';
 import { ServiceCategory } from '../../service-categories/entities/service-category.entity';
 import { Timezone } from '../../timezones/entities/timezone.entity';
-import { RolesService } from '../../roles/roles.service';
 import { citiesData } from './cities.seed';
 import { countriesData } from './countries.seed';
 import { serviceCategoriesData } from './service-categories.seed';
 import { timezonesData } from './timezones.seed';
-import { User } from 'src/users/entities/user.entity';
-import { Business } from 'src/businesses/entities/business.entity';
-import { Membership } from 'src/memberships/entities/membership.entity';
 
 @Injectable()
 export class SeedService {
@@ -29,11 +28,11 @@ export class SeedService {
     this.logger.log('Starting database seeding...');
 
     await this.seedRoles();
-    await this.seedSuperAdminAndDefaultBusiness();
     await this.seedCountries();
-    await this.seedTimezones();
     await this.seedCities();
+    await this.seedTimezones();
     await this.seedServiceCategories();
+    await this.seedSuperAdminAndDefaultBusiness();
 
     this.logger.log('Database seeding completed!');
   }
@@ -63,10 +62,17 @@ export class SeedService {
     });
 
     if (!defaultBusiness) {
+      const city = await this.entityManager.findOne(City, {
+        where: { name: 'Saint-Julien-en-Genevois', countryCode: 'FR' },
+      });
+      if (!city) {
+        this.logger.error('City for default business not found. Please seed cities first.');
+        return;
+      }
       const business = this.entityManager.create(Business, {
         name: defaultBusinessName,
         description: '',
-        address: '1 allée de la feuillée, 74160 Saint-Julien-en-Genevois, France',
+        address: '1 allée de la feuillée',
         phone: '+33648962801',
         email: 'contact@avetime.com',
         website: 'avetime.com',
@@ -74,6 +80,7 @@ export class SeedService {
         longitude: 0,
         isActive: true,
         isVerified: true,
+        cityId: city.id,
       });
       await this.entityManager.save(business);
       this.logger.log(`Created default business: ${defaultBusinessName}`);

@@ -18,10 +18,10 @@ export class Business {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @Column({ type: 'uuid' })
+  @Column({ type: 'uuid', nullable: true })
   ownerId: string;
 
-  @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, { onDelete: 'SET NULL', nullable: true })
   @JoinColumn({ name: 'ownerId' })
   owner: User;
 
