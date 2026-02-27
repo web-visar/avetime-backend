@@ -6,13 +6,13 @@ import { Country } from './entities/country.entity';
 @Injectable()
 export class CountriesService {
   constructor(private readonly entityManager: EntityManager) {}
-  async search(term: string, lang: string): Promise<IAutocompleteOption[]> {
+  async search(query: string, lang: string): Promise<IAutocompleteOption[]> {
     const countries = await this.entityManager
       .createQueryBuilder(Country, 'country')
       .where(`country.lang = :lang`, { lang })
-      .addSelect('word_similarity(country.name, :term)', 'similarity')
+      .addSelect('word_similarity(country.name, :query)', 'similarity')
       .orderBy('similarity', 'DESC')
-      .setParameter('term', term)
+      .setParameter('query', query)
       .take(10)
       .getMany();
 
@@ -21,6 +21,7 @@ export class CountriesService {
       value: country.code,
       meta: {
         nativeName: country.nativeName,
+        valueIs: 'code',
       },
     }));
   }

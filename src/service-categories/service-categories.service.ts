@@ -42,8 +42,11 @@ export class ServiceCategoriesService {
       .getMany();
 
     return options.map((category) => ({
-      value: category.id,
+      value: category.code,
       text: category.name,
+      meta: {
+        valueId: 'code',
+      },
     }));
   }
 
