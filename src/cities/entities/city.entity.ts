@@ -3,7 +3,7 @@ import { Country } from '../../countries/entities/country.entity';
 import { Business } from '../../businesses/entities/business.entity';
 
 @Entity('t_cities')
-@Index(['name', 'countryCode', 'lang','cityGroupId'])
+@Index(['name', 'countryCode', 'lang', 'cityGroupId'])
 export class City {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -27,10 +27,7 @@ export class City {
     nullable: true,
     createForeignKeyConstraints: false,
   })
-  @JoinColumn([
-    { name: 'countryCode', referencedColumnName: 'code' },
-    { name: 'lang', referencedColumnName: 'lang' },
-  ])
+  @JoinColumn([{ name: 'countryCode', referencedColumnName: 'code' }])
   country: Country;
 
   @Column({ default: true })

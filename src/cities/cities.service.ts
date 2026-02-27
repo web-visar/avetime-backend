@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
-import { AutocompleteOption } from 'src/core/interfaces/autocomplete-option.interface';
+import { IAutocompleteOption } from 'src/core/interfaces/autocomplete-option.interface';
 import { EntityManager } from 'typeorm';
 import { City } from './entities/city.entity';
+import { Country } from 'src/countries/entities/country.entity';
 
 @Injectable()
 export class CitiesService {
   constructor(@InjectEntityManager() private readonly entityManager: EntityManager) {}
 
-  async search(term: string, lang: string): Promise<AutocompleteOption[]> {
+  async search(query: string, lang: string): Promise<IAutocompleteOption[]> {
     const cities = await this.entityManager
       .createQueryBuilder(City, 'city')
-      .where(`city.lang = :lang`, { lang })
-      .addSelect('word_similarity(city.name, :term)', 'similarity')
+      .leftJoinAndSelect(Country, 'country', 'country.code = city.countryCode AND country.lang = :countryLang', { countryLang: lang })
+      .where('city.lang = :lang OR city.lang IS NULL', { lang })
+      .addSelect('word_similarity(city.name, :query)', 'similarity')
+      .setParameter('query', query)
       .orderBy('similarity', 'DESC')
-      .setParameter('term', term)
       .take(10)
-      .getMany();
+      .getRawMany();
 
-    return cities.map((city) => ({
-      text: city.name,
-      value: city.id,
+    return cities.map((data) => ({
+      text: data.city_name,
+      value: data.city_id,
+      meta: {
+        countryName: data.country_name,
+      },
     }));
   }
 

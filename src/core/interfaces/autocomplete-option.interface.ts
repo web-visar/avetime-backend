@@ -1,5 +1,5 @@
-export interface AutocompleteOption {
+export interface IAutocompleteOption {
   value: string;
   text: string;
-  meta?: { [key: string]: string };
+  meta?: { [key: string]: string | null };
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { AutocompleteOption } from 'src/core/interfaces/autocomplete-option.interface';
+import { IAutocompleteOption } from 'src/core/interfaces/autocomplete-option.interface';
 import { EntityManager } from 'typeorm';
 import { Country } from './entities/country.entity';
 
 @Injectable()
 export class CountriesService {
   constructor(private readonly entityManager: EntityManager) {}
-  async search(term: string, lang: string) : Promise<AutocompleteOption[]> {
+  async search(term: string, lang: string) : Promise<IAutocompleteOption[]> {
     const countries = await this.entityManager
       .createQueryBuilder(Country, 'country')
       .where(`country.lang = :lang`, { lang })

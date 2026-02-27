@@ -1,13 +1,5 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  OneToMany,
-  Index,
-} from 'typeorm';
-import { City } from '../../cities/entities/city.entity';
+import { City } from 'src/cities/entities/city.entity';
+import { Column, CreateDateColumn, Entity, Index, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('t_countries')
 @Index(['code', 'lang'], { unique: true })
@@ -35,11 +27,11 @@ export class Country {
   @Column({ type: 'varchar', length: 10, nullable: true })
   flag: string; // Flag emoji or code
 
-  @Column({ default: true })
-  isActive: boolean;3468
-
   @OneToMany(() => City, (city) => city.country)
   cities: City[];
+
+  @Column({ default: true })
+  isActive: boolean;
 
   @CreateDateColumn()
   createdAt: Date;

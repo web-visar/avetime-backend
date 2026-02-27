@@ -7,9 +7,10 @@ import { Public } from 'src/auth/decorators';
 export class CitiesController {
   constructor(private readonly citiesService: CitiesService) {}
 
+  @Public()
   @Get('search')
-  search(@Query('term') term: string, @Cookies('lang') lang: string) {
-    return this.citiesService.search(term, lang);
+  search(@Query('query') query: string, @Cookies('lang') lang: string) {
+    return this.citiesService.search(query, lang);
   }
 
   @Public()
