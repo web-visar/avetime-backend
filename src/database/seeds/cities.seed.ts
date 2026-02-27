@@ -1,12 +1,12 @@
 export const citiesData = [
   // France cities
-  { name: 'Saint-Julien-en-Genevois', countryCode: 'FR', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Collonges-sous-Salève', countryCode: 'FR', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Annemasse', countryCode: 'FR', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Gaillard', countryCode: 'FR', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Cranves-Sales', countryCode: 'FR', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Ville-la-Grand', countryCode: 'FR', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Vétraz-Monthoux', countryCode: 'FR', lang: null, cityGroupId: null, isActive: true },
+  { name: 'Saint-Julien-en-Genevois', countryCode: 'FR', lang: null, cityGroupId: '8cd128d7-e043-413a-9f16-2aa66d421d7d', isActive: true },
+  { name: 'Collonges-sous-Salève', countryCode: 'FR', lang: null, cityGroupId: '6e292131-9edf-4a0b-98c2-987280ec3c59', isActive: true },
+  { name: 'Annemasse', countryCode: 'FR', lang: null, cityGroupId: 'a522182b-b17b-4f11-a936-f4691153eab1', isActive: true },
+  { name: 'Gaillard', countryCode: 'FR', lang: null, cityGroupId: '7c80cb0c-ace6-4036-aef9-251185e6b57a', isActive: true },
+  { name: 'Cranves-Sales', countryCode: 'FR', lang: null, cityGroupId: 'e7dbff67-411f-45a9-adc3-d138237faefe', isActive: true },
+  { name: 'Ville-la-Grand', countryCode: 'FR', lang: null, cityGroupId: 'c6755141-fb89-48da-9369-17c404679b16', isActive: true },
+  { name: 'Vétraz-Monthoux', countryCode: 'FR', lang: null, cityGroupId: 'eed7be23-88ab-46cf-9508-7b8beac9ff24', isActive: true },
   // Paris
   { name: 'Paris', countryCode: 'FR', lang: 'en', cityGroupId: '80399957-aebe-4275-b804-fcf314c79678', isActive: true },
   { name: 'Paris', countryCode: 'FR', lang: 'fr', cityGroupId: '80399957-aebe-4275-b804-fcf314c79678', isActive: true },
@@ -21,13 +21,13 @@ export const citiesData = [
   { name: 'Marsejë', countryCode: 'FR', lang: 'sq', cityGroupId: '202a078b-4ebc-4692-9a13-548d601e8634', isActive: true },
   { name: 'Marsella', countryCode: 'FR', lang: 'es', cityGroupId: '202a078b-4ebc-4692-9a13-548d601e8634', isActive: true },
   // United Kingdom cities
-  { name: 'Reading', countryCode: 'GB', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Slough', countryCode: 'GB', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Woking', countryCode: 'GB', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Guildford', countryCode: 'GB', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Bracknell', countryCode: 'GB', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Maidenhead', countryCode: 'GB', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Windsor', countryCode: 'GB', lang: null, cityGroupId: null, isActive: true },
+  { name: 'Reading', countryCode: 'GB', lang: null, cityGroupId: '968e80e8-0470-441c-a6c6-38d8eef4b325', isActive: true },
+  { name: 'Slough', countryCode: 'GB', lang: null, cityGroupId: '1fa3faf5-e83d-4b76-97e0-f0d5b797bbc6', isActive: true },
+  { name: 'Woking', countryCode: 'GB', lang: null, cityGroupId: '9ffc0db5-1ef3-407b-baed-fd1ba499e0f0', isActive: true },
+  { name: 'Guildford', countryCode: 'GB', lang: null, cityGroupId: '878eaf45-6266-4974-a6ab-f4870354043c', isActive: true },
+  { name: 'Bracknell', countryCode: 'GB', lang: null, cityGroupId: 'f9e5bc88-472d-4a4b-bf8f-bb2117a2f7c3', isActive: true },
+  { name: 'Maidenhead', countryCode: 'GB', lang: null, cityGroupId: '8b5b03e0-f31b-477b-9d4c-07f3be290a17', isActive: true },
+  { name: 'Windsor', countryCode: 'GB', lang: null, cityGroupId: 'c672deba-f4f0-43ef-96b2-ebd8e47a927f', isActive: true },
   { name: 'London', countryCode: 'GB', lang: 'en', cityGroupId: '4b171135-23ab-4ea8-8526-cd51cc096006', isActive: true },
   { name: 'Londres', countryCode: 'GB', lang: 'fr', cityGroupId: '4b171135-23ab-4ea8-8526-cd51cc096006', isActive: true },
   { name: 'London', countryCode: 'GB', lang: 'de', cityGroupId: '4b171135-23ab-4ea8-8526-cd51cc096006', isActive: true },
@@ -48,13 +48,13 @@ export const citiesData = [
   { name: 'Lozanë', countryCode: 'CH', lang: 'sq', cityGroupId: '6108e37e-7958-4ae4-9410-71f86d02dbe1', isActive: true },
   { name: 'Lausana', countryCode: 'CH', lang: 'es', cityGroupId: '6108e37e-7958-4ae4-9410-71f86d02dbe1', isActive: true },
   // Kosovo cities
-  { name: 'Prishtinë', countryCode: 'XK', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Ferizaj', countryCode: 'XK', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Gjilan', countryCode: 'XK', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Prizren', countryCode: 'XK', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Pejë', countryCode: 'XK', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Gjakovë', countryCode: 'XK', lang: null, cityGroupId: null, isActive: true },
-  { name: 'Mitrovicë', countryCode: 'XK', lang: null, cityGroupId: null, isActive: true },
+  { name: 'Prishtinë', countryCode: 'XK', lang: null, cityGroupId: '81085c0a-f917-44a8-a75b-91800623b89e', isActive: true },
+  { name: 'Ferizaj', countryCode: 'XK', lang: null, cityGroupId: 'e2cb8bd1-1ee9-429c-9f63-0dc45d37f222', isActive: true },
+  { name: 'Gjilan', countryCode: 'XK', lang: null, cityGroupId: '7ee2b529-58f9-4669-b8e8-94b41eaa61f1', isActive: true },
+  { name: 'Prizren', countryCode: 'XK', lang: null, cityGroupId: 'ddd638a3-3930-42d2-be09-de6f6f38ce03', isActive: true },
+  { name: 'Pejë', countryCode: 'XK', lang: null, cityGroupId: '829bb825-c035-4bce-b239-dd315eb95d2c', isActive: true },
+  { name: 'Gjakovë', countryCode: 'XK', lang: null, cityGroupId: '8b8f09c4-4722-4a68-a50f-78d41bf0d847', isActive: true },
+  { name: 'Mitrovicë', countryCode: 'XK', lang: null, cityGroupId: '20dabba4-a353-45ab-9df8-57ad652038b2', isActive: true },
 
   // Italy cities
   { name: 'Rome', countryCode: 'IT', lang: 'en', cityGroupId: '608d5389-e556-4ba6-a5d8-177592e941e3', isActive: true },
@@ -103,7 +103,7 @@ export const citiesData = [
   { name: 'Fráncfort del Meno', countryCode: 'DE', lang: 'es', cityGroupId: '7e4c3572-47bf-4e7a-bea2-47038bfbc355', isActive: true },
 
   // Spain cities
-  { name: 'Madrid', countryCode: 'ES', lang: null, cityGroupId: null, isActive: true },
+  { name: 'Madrid', countryCode: 'ES', lang: null, cityGroupId: '50c495e7-1927-4679-b1c3-885026cb3e99', isActive: true },
   { name: 'Barcelona', countryCode: 'ES', lang: 'en', cityGroupId: '1926832d-bf5d-4425-bd52-6329f3b4367c', isActive: true },
   { name: 'Barcelone', countryCode: 'ES', lang: 'fr', cityGroupId: '1926832d-bf5d-4425-bd52-6329f3b4367c', isActive: true },
   { name: 'Barcelona', countryCode: 'ES', lang: 'de', cityGroupId: '1926832d-bf5d-4425-bd52-6329f3b4367c', isActive: true },
@@ -124,5 +124,5 @@ export const citiesData = [
   { name: 'Salzburg', countryCode: 'AT', lang: 'it', cityGroupId: '83a5b843-b1e8-461f-9b44-82d6822bf7ec', isActive: true },
   { name: 'Salzburg', countryCode: 'AT', lang: 'sq', cityGroupId: '83a5b843-b1e8-461f-9b44-82d6822bf7ec', isActive: true },
   { name: 'Salzburgo', countryCode: 'AT', lang: 'es', cityGroupId: '83a5b843-b1e8-461f-9b44-82d6822bf7ec', isActive: true },
-  { name: 'Graz', countryCode: 'AT', lang: null, cityGroupId: null, isActive: true },
+  { name: 'Graz', countryCode: 'AT', lang: null, cityGroupId: 'd5836920-de42-4fcb-93af-8072efe6f6fa', isActive: true },
 ];

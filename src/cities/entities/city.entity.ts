@@ -19,7 +19,7 @@ export class City {
   @Index()
   lang: string | null; // ISO 639-1 language code
 
-  @Column({ type: 'uuid', nullable: true })
+  @Column({ type: 'uuid', nullable: false })
   @Index()
   cityGroupId: string | null; // Groups translations of the same city together
 
