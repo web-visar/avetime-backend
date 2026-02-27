@@ -21,11 +21,13 @@ export class CitiesService {
       .take(10)
       .getRawMany();
 
+    console.log('Found cities:', cities);
     return cities.map((data) => ({
       text: data.city_name,
       value: data.city_id,
       meta: {
         countryName: data.country_name,
+        countryCode: data.country_code,
       },
     }));
   }
