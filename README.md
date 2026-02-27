@@ -1,4 +1,4 @@
-# Leven Time - Salon Appointment Booking System
+# AVEtime - Salon Appointment Booking System
 
 A complete NestJS backend for a salon appointment booking application with multi-location support.
 
@@ -34,7 +34,7 @@ DB_HOST=localhost
 DB_PORT=5432
 DB_USERNAME=postgres
 DB_PASSWORD=postgres
-DB_DATABASE=leven_time
+DB_DATABASE=avetime
 DB_SYNC=true
 ```
 
@@ -42,7 +42,7 @@ DB_SYNC=true
 
 ```bash
 psql -U postgres
-CREATE DATABASE leven_time;
+CREATE DATABASE avetime;
 \q
 ```
 

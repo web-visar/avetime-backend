@@ -1,0 +1,5 @@
+{
+  "PASSWORD_REQUIREMENTS": "Le mot de passe doit contenir au moins 8 caractères, y compris une majuscule, une minuscule et un chiffre",
+  "INVALID_FULL_NAME": "Le nom complet ne doit contenir que des lettres et des espaces.",
+  "INVALID_EMAIL": "Veuillez entrer une adresse e-mail valide."
+}

@@ -1,0 +1,56 @@
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Appointment } from '../../appointments/entities/appointment.entity';
+import { Business } from '../../businesses/entities/business.entity';
+import { EmployeeBreak } from '../../employee-breaks/entities/employee-break.entity';
+import { EmployeeSchedule } from '../../employee-schedules/entities/employee-schedule.entity';
+import { Service } from '../../services/entities/service.entity';
+
+@Entity('t_employees')
+export class Employee {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ type: 'uuid' })
+  businessId: string;
+
+  @ManyToOne(() => Business, (business) => business.employees, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'businessId' })
+  business: Business;
+
+  @Column({ default: true })
+  isActive: boolean;
+
+  @ManyToMany(() => Service, (service) => service.employees)
+  @JoinTable({
+    name: 't_employee_services',
+    joinColumn: { name: 'employeeId', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'serviceId', referencedColumnName: 'id' },
+  })
+  services: Service[];
+
+  @OneToMany(() => Appointment, (appointment) => appointment.employee)
+  appointments: Appointment[];
+
+  @OneToMany(() => EmployeeSchedule, (schedule) => schedule.employee)
+  schedules: EmployeeSchedule[];
+
+  @OneToMany(() => EmployeeBreak, (breakTime) => breakTime.employee)
+  breaks: EmployeeBreak[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+}

@@ -1,0 +1,5 @@
+{
+  "PASSWORD_REQUIREMENTS": "The password must be at least 8 characters long and include an uppercase letter, a lowercase letter, and a digit.",
+  "INVALID_FULL_NAME": "Full name must contain only letters and spaces.",
+  "INVALID_EMAIL": "Please enter a valid email address."
+}

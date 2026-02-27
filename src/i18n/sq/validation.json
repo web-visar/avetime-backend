@@ -1,0 +1,5 @@
+{
+  "PASSWORD_REQUIREMENTS": "Fjalëkalimi duhet të jetë të paktën 8 karaktere i gjatë dhe të përfshijë një shkronjë të madhe, një shkronjë të vogël dhe një shifër.",
+  "INVALID_FULL_NAME": "Emri i plotë duhet të përmbajë vetëm shkronja dhe hapësira.",
+  "INVALID_EMAIL": "Ju lutemi shkruani një adresë emaili të vlefshme."
+}
