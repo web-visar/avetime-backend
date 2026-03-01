@@ -30,7 +30,7 @@ export class Membership {
   @JoinColumn({ name: 'businessId' })
   business: Business;
 
-  @Column({ default: true })
+  @Column({ default: false })
   isDefault: boolean;
 
   @Column({ type: 'timestamp', nullable: true })

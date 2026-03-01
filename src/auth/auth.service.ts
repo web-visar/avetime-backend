@@ -117,10 +117,7 @@ export class AuthService {
   }
 
   async getProfile(): Promise<AuthenticatedUser> {
-    const userId = this.appContext.getUserId();
-    if (!userId) {
-      throw new UnauthorizedException('User not authenticated');
-    }
+    const userId = this.appContext.requireUserId();
     const user = await this.entityManager.findOne(User, {
       where: { id: userId },
     });
