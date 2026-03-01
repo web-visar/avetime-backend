@@ -16,7 +16,7 @@ export class Membership {
   @JoinColumn({ name: 'userId' })
   user: User;
 
-  @Column({ type: 'uuid', nullable: true })
+  @Column('varchar', { length: 100 })
   role: string;
 
   @ManyToOne(() => Role)
@@ -27,7 +27,7 @@ export class Membership {
   businessId: string;
 
   @ManyToOne(() => Business, (business) => business.memberships, { onDelete: 'CASCADE', nullable: true })
-  @JoinColumn({ name: 'businessId' })
+  @JoinColumn({ name: 'businessId', referencedColumnName: 'id' })
   business: Business;
 
   @Column({ default: false })

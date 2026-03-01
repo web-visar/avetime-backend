@@ -7,6 +7,7 @@ import type { StringValue } from 'ms';
 import { AppContextProvider } from 'src/core/providers/context.provider';
 import { EntityManager } from 'typeorm';
 import { User } from '../users/entities/user.entity';
+import { Membership } from '../memberships/entities/membership.entity';
 import {
   DEFAULT_JWT_EXPIRES_IN,
   DEFAULT_JWT_REFRESH_EXPIRES_IN,
@@ -126,10 +127,24 @@ export class AuthService {
       throw new UnauthorizedException('User not found');
     }
 
+    const memberships = await this.entityManager.find(Membership, {
+      where: { userId: user.id },
+      select: ['role'],
+    });
+
+    const roles = Array.from(
+      new Set(
+        memberships
+          .map((m) => m.role)
+          .filter((role): role is string => typeof role === 'string' && role.length > 0),
+      ),
+    );
+
     return {
       id: user.id,
       email: user.email,
       fullName: user.fullName,
+      roles,
     };
   }
 

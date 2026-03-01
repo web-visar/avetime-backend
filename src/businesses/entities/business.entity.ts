@@ -1,15 +1,5 @@
 import { BusinessImage } from 'src/business-images/entities/business-image.entity';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn
-} from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { City } from '../../cities/entities/city.entity';
 import { Employee } from '../../employees/entities/employee.entity';
 import { Membership } from '../../memberships/entities/membership.entity';
