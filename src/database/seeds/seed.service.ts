@@ -40,22 +40,31 @@ export class SeedService {
 
   private async seedRoles() {
     this.logger.log('Seeding roles...');
-    const roles = ['superadmin', 'admin', 'user', 'customer'].map((role) => {
-      return this.entityManager.create(Role, { name: role });
-    });
-    const seededRoles = await this.entityManager.save(roles);
-    this.logger.log(`Created ${seededRoles.length} roles`);
+    const roles = ['superadmin', 'admin', 'user', 'customer'];
+    for (const role of roles) {
+      const existing = await this.entityManager.findOne(Role, {
+        where: { name: role },
+      });
 
+      if (!existing) {
+        const roleEntity = this.entityManager.create(Role, { name: role });
+        await this.entityManager.save(roleEntity);
+        this.logger.log(`Created role: ${role}`);
+      }
+    }
     this.logger.log('Roles seeding completed');
   }
 
   private async seedSuperAdminAndDefaultBusiness() {
     this.logger.log('Seeding superadmin user and default business...');
 
-    const superAdminEmail = this.configService.get<string>('DEFAULT_ADMIN_EMAIL', 'admin@avetime.com');
-    const superAdminPassword = this.configService.get<string>('DEFAULT_ADMIN_PASSWORD', 'Admin123!');
-    const superAdminFullName = this.configService.get<string>('DEFAULT_ADMIN_FULLNAME', 'Super Admin');
-
+    const superAdminEmail = this.configService.get<string>('DEFAULT_ADMIN_EMAIL');
+    const superAdminPassword = this.configService.get<string>('DEFAULT_ADMIN_PASSWORD');
+    const superAdminFullName = this.configService.get<string>('DEFAULT_ADMIN_FULLNAME');
+    if (!superAdminEmail || !superAdminPassword || !superAdminFullName) {
+      this.logger.warn('Superadmin credentials are not fully set in environment variables. Skipping superadmin seeding.');
+      return;
+    }
     const existing = await this.entityManager.findOne(User, {
       where: { email: superAdminEmail },
     });
