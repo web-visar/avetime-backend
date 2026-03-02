@@ -1,40 +1,54 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { InjectEntityManager } from '@nestjs/typeorm';
 import { CreateBusinessDto } from './dto/create-business.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
+import { EntityManager } from 'typeorm';
+import { Business } from './entities/business.entity';
 
 @Injectable()
 export class BusinessesService {
-  mockBusinesses = [
-    {
-      id: 1,
-      name: 'Business 1',
-      address: 'Address for Business ONE',
-    },
-    {
-      id: 2,
-      name: 'Business 2',
-      address: 'Address for Business TWO',
-    },
-  ];
+  constructor(@InjectEntityManager() private readonly entityManager: EntityManager) {}
 
-  create(createBusinessDto: CreateBusinessDto) {
-    return 'This action adds a new business';
+  async create(createBusinessDto: CreateBusinessDto): Promise<Business> {
+    const existing = await this.entityManager.findOne(Business, {
+      where: { link: createBusinessDto.link },
+    });
+
+    if (existing) {
+      throw new ConflictException(`Business with link '${createBusinessDto.link}' already exists`);
+    }
+
+    const business = this.entityManager.create(Business, createBusinessDto);
+    return await this.entityManager.save(Business, business);
   }
 
-  findAll() {
-    return this.mockBusinesses;
+  async findAll(): Promise<Business[]> {
+    return await this.entityManager.find(Business, {
+      order: { createdAt: 'DESC' },
+    });
   }
 
-  async findOne(id: number) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    return this.mockBusinesses.find((business) => business.id === id);
+  async findOne(id: string): Promise<Business> {
+    const business = await this.entityManager.findOne(Business, {
+      where: { id },
+    });
+
+    if (!business) {
+      throw new NotFoundException(`Business with ID '${id}' not found`);
+    }
+
+    return business;
   }
 
-  update(id: number, updateBusinessDto: UpdateBusinessDto) {
-    return `This action updates a #${id} business`;
+  async update(id: string, updateBusinessDto: UpdateBusinessDto): Promise<Business> {
+    const business = await this.findOne(id);
+    Object.assign(business, updateBusinessDto);
+    return await this.entityManager.save(Business, business);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} business`;
+  async remove(id: string): Promise<{ deleted: boolean }> {
+    await this.findOne(id);
+    await this.entityManager.delete(Business, { id });
+    return { deleted: true };
   }
 }
