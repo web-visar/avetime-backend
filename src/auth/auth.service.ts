@@ -132,13 +132,7 @@ export class AuthService {
       select: ['role'],
     });
 
-    const roles = Array.from(
-      new Set(
-        memberships
-          .map((m) => m.role)
-          .filter((role): role is string => typeof role === 'string' && role.length > 0),
-      ),
-    );
+    const roles = Array.from(new Set(memberships.map((m) => m.role).filter((role): role is string => typeof role === 'string' && role.length > 0)));
 
     return {
       id: user.id,
