@@ -5,7 +5,6 @@ import { Employee } from '../../employees/entities/employee.entity';
 import { Membership } from '../../memberships/entities/membership.entity';
 import { OpeningHour } from '../../opening-hours/entities/opening-hour.entity';
 import { Service } from '../../services/entities/service.entity';
-import { User } from '../../users/entities/user.entity';
 
 @Entity('t_businesses')
 export class Business {
