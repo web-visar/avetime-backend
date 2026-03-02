@@ -14,20 +14,13 @@ export class Business {
 
   @Column({ type: 'varchar', length: 100 })
   @Index({ unique: true })
-  link: string; // unique link for the business(E.g. for SEO and sharing purposes)
+  link: string;
 
   @Column({ type: 'varchar', length: 200 })
   name: string;
 
   @Column({ type: 'text', nullable: true })
   description: string;
-
-  @Column({ type: 'uuid', nullable: true })
-  ownerId: string;
-
-  @ManyToOne(() => User, { onDelete: 'SET NULL', nullable: true })
-  @JoinColumn({ name: 'ownerId' })
-  owner: User;
 
   @Column({ type: 'uuid' })
   cityGroupId: string;
@@ -51,10 +44,10 @@ export class Business {
   @OneToMany(() => BusinessImage, (businessImage) => businessImage.business)
   images: BusinessImage[];
 
-  @Column({ type: 'decimal', precision: 10, scale: 8, nullable: true })
+  @Column({ type: 'decimal', precision: 12, scale: 8, nullable: true })
   latitude: number;
 
-  @Column({ type: 'decimal', precision: 11, scale: 8, nullable: true })
+  @Column({ type: 'decimal', precision: 12, scale: 8, nullable: true })
   longitude: number;
 
   @Column({ default: true })
