@@ -18,4 +18,14 @@ export class CreateBusinessDto {
 
 	@IsUUID()
 	cityGroupId: string;
+
+    @IsString()
+    @MinLength(10)
+    @MaxLength(1000)
+    description: string;
+
+    @IsString()
+    @MinLength(7)
+    @MaxLength(20)
+    phone: string;
 }
