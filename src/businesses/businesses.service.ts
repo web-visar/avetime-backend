@@ -4,6 +4,7 @@ import { CreateBusinessDto } from './dto/create-business.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
 import { EntityManager } from 'typeorm';
 import { Business } from './entities/business.entity';
+import { sleep } from 'src/core/helpers';
 
 @Injectable()
 export class BusinessesService {
@@ -29,6 +30,7 @@ export class BusinessesService {
   }
 
   async findOne(id: string): Promise<Business> {
+    await sleep(1500);
     const business = await this.entityManager.findOne(Business, {
       where: { id },
     });
