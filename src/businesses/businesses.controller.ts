@@ -25,7 +25,7 @@ export class BusinessesController {
     return this.businessesService.findOne(link);
   }
 
-  @Get('byId/:id')
+  @Get('by-id/:id')
   findById(@Param('id') id: string) {
     return this.businessesService.findOneById(id);
   }
