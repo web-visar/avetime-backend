@@ -83,6 +83,7 @@ export class SeedService {
       const membership = this.entityManager.create(Membership, {
         userId: superAdmin.id,
         role: 'superadmin',
+        isDefault: true,
       });
       await this.entityManager.save(membership);
       this.logger.log(`Created superadmin membership for user: ${superAdminEmail}`);
