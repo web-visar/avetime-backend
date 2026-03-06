@@ -19,10 +19,10 @@ export class BusinessesController {
     return this.businessesService.findAll();
   }
 
-  @Get(':id')
+  @Get(':link')
   @Public()
-  findOne(@Param('id') id: string) {
-    return this.businessesService.findOne(id);
+  findOne(@Param('link') link: string) {
+    return this.businessesService.findOne(link);
   }
 
   @Patch(':id')

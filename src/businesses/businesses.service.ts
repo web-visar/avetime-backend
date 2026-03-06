@@ -28,13 +28,13 @@ export class BusinessesService {
     });
   }
 
-  async findOne(id: string): Promise<Business> {
+  async findOne(link: string): Promise<Business> {
     const business = await this.entityManager.findOne(Business, {
-      where: { id },
+      where: { link },
     });
 
     if (!business) {
-      throw new NotFoundException(`Business with ID '${id}' not found`);
+      throw new NotFoundException(`Business with link '${link}' not found`);
     }
 
     return business;
