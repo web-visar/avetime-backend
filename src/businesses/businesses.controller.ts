@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Public } from 'src/auth/decorators';
 import { BusinessesService } from './businesses.service';
 import { CreateBusinessDto } from './dto/create-business.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
-import { Public } from 'src/auth/decorators';
 
 @Controller('businesses')
 export class BusinessesController {
@@ -21,13 +21,13 @@ export class BusinessesController {
 
   @Get(':link')
   @Public()
-  findOne(@Param('link') link: string) {
-    return this.businessesService.findOne(link);
+  findOneByLink(@Param('link') link: string) {
+    return this.businessesService.findOneByLink(link);
   }
 
   @Get('by-id/:id')
-  findById(@Param('id') id: string) {
-    return this.businessesService.findOneById(id);
+  findOne(@Param('id') id: string) {
+    return this.businessesService.findOne(id);
   }
 
   @Patch(':id')

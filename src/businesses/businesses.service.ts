@@ -28,7 +28,7 @@ export class BusinessesService {
     });
   }
 
-  async findOne(link: string): Promise<Business> {
+  async findOneByLink(link: string): Promise<Business> {
     const business = await this.entityManager.findOne(Business, {
       where: { link },
     });
@@ -40,7 +40,7 @@ export class BusinessesService {
     return business;
   }
 
-  async findOneById(id: string): Promise<Business> {
+  async findOne(id: string): Promise<Business> {
     const business = await this.entityManager.findOne(Business, {
       where: { id },
     });
@@ -53,13 +53,13 @@ export class BusinessesService {
   }
 
   async update(id: string, updateBusinessDto: UpdateBusinessDto): Promise<Business> {
-    const business = await this.findOneById(id);
+    const business = await this.findOne(id);
     Object.assign(business, updateBusinessDto);
     return await this.entityManager.save(Business, business);
   }
 
   async remove(id: string): Promise<{ deleted: boolean }> {
-    await this.findOneById(id);
+    await this.findOne(id);
     await this.entityManager.delete(Business, { id });
     return { deleted: true };
   }
