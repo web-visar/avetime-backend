@@ -25,12 +25,18 @@ export class BusinessesService {
   async findAll(): Promise<Business[]> {
     return await this.entityManager.find(Business, {
       order: { createdAt: 'DESC' },
+      relations: {
+        city: true,
+      },
     });
   }
 
   async findOneByLink(link: string): Promise<Business> {
     const business = await this.entityManager.findOne(Business, {
       where: { link },
+      relations: {
+        city: true,
+      },
     });
 
     if (!business) {
@@ -43,6 +49,9 @@ export class BusinessesService {
   async findOne(id: string): Promise<Business> {
     const business = await this.entityManager.findOne(Business, {
       where: { id },
+      relations: {
+        city: true,
+      },
     });
 
     if (!business) {
