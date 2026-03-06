@@ -25,6 +25,11 @@ export class BusinessesController {
     return this.businessesService.findOne(link);
   }
 
+  @Get('byId/:id')
+  findById(@Param('id') id: string) {
+    return this.businessesService.findOneById(id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBusinessDto: UpdateBusinessDto) {
     return this.businessesService.update(id, updateBusinessDto);

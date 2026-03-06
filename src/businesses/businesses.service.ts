@@ -40,14 +40,26 @@ export class BusinessesService {
     return business;
   }
 
+  async findOneById(id: string): Promise<Business> {
+    const business = await this.entityManager.findOne(Business, {
+      where: { id },
+    });
+
+    if (!business) {
+      throw new NotFoundException(`Business with ID '${id}' not found`);
+    }
+
+    return business;
+  }
+
   async update(id: string, updateBusinessDto: UpdateBusinessDto): Promise<Business> {
-    const business = await this.findOne(id);
+    const business = await this.findOneById(id);
     Object.assign(business, updateBusinessDto);
     return await this.entityManager.save(Business, business);
   }
 
   async remove(id: string): Promise<{ deleted: boolean }> {
-    await this.findOne(id);
+    await this.findOneById(id);
     await this.entityManager.delete(Business, { id });
     return { deleted: true };
   }
