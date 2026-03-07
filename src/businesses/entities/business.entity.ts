@@ -21,11 +21,21 @@ export class Business {
   @Column({ type: 'text', nullable: true })
   description: string;
 
+  @Column({ type: 'varchar', length: 5, nullable: true, default: 'fr' })
+  @Index()
+  lang: string;
+
   @Column({ type: 'uuid' })
   cityGroupId: string;
 
   @ManyToOne(() => City, { onDelete: 'RESTRICT', createForeignKeyConstraints: false })
-  @JoinColumn([{ name: 'cityGroupId', referencedColumnName: 'cityGroupId' }])
+  @JoinColumn([
+    { name: 'cityGroupId', referencedColumnName: 'cityGroupId' },
+    {
+      name: 'lang',
+      referencedColumnName: 'lang',
+    },
+  ])
   city: City;
 
   @Column({ length: 255 })
