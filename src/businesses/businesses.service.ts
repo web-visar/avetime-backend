@@ -1,11 +1,11 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
+import { City } from 'src/cities/entities/city.entity';
+import { AppContextProvider } from 'src/core/providers/context.provider';
 import { EntityManager, IsNull } from 'typeorm';
 import { CreateBusinessDto } from './dto/create-business.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
 import { Business } from './entities/business.entity';
-import { AppContextProvider } from 'src/core/providers/context.provider';
-import { City } from 'src/cities/entities/city.entity';
 
 @Injectable()
 export class BusinessesService {
@@ -28,13 +28,25 @@ export class BusinessesService {
   }
 
   async findAll(): Promise<Business[]> {
-    return await this.entityManager
-      .createQueryBuilder(Business, 'business')
-      .leftJoinAndSelect(City, 'city', 'city.cityGroupId = business.cityGroupId AND (city.lang = :lang OR city.lang IS NULL)', {
-        lang: this.appContext.getLang(),
-      })
-      .orderBy('business.createdAt', 'DESC')
-      .getMany();
+    const businesses = await this.entityManager.find(Business, {
+      order: { createdAt: 'DESC' },
+    });
+    console.log('lang in service', this.appContext.getLang());
+    await Promise.all(
+      businesses.map(async (business) => {
+        let city: City | null = null;
+        city = await this.entityManager.findOne(City, {
+          where: [{ cityGroupId: business.cityGroupId, lang: this.appContext.getLang() }],
+        });
+        if (!city) {
+          city = await this.entityManager.findOne(City, {
+            where: [{ cityGroupId: business.cityGroupId, lang: IsNull() }],
+          });
+        }
+        if (city) business.city = city;
+      }),
+    );
+    return businesses;
   }
 
   async findOneByLink(link: string): Promise<Business> {
@@ -45,12 +57,18 @@ export class BusinessesService {
     if (!business) {
       throw new NotFoundException(`Business with link '${link}' not found`);
     }
-    const city = await this.entityManager.findOne(City, {
-      where: [
-        { cityGroupId: business.cityGroupId, lang: this.appContext.getLang() },
-        { cityGroupId: business.cityGroupId, lang: IsNull() },
-      ],
+    let city: City | null = null;
+    city = await this.entityManager.findOne(City, {
+      where: { cityGroupId: business.cityGroupId, lang: this.appContext.getLang() },
     });
+    if (!city) {
+      city = await this.entityManager.findOne(City, {
+        where: {
+          cityGroupId: business.cityGroupId,
+          lang: IsNull(),
+        },
+      });
+    }
     if (city) business.city = city;
     return business;
   }
@@ -67,12 +85,15 @@ export class BusinessesService {
       throw new NotFoundException(`Business with ID '${id}' not found`);
     }
 
-    const city = await this.entityManager.findOne(City, {
-      where: [
-        { cityGroupId: business.cityGroupId, lang: this.appContext.getLang() },
-        { cityGroupId: business.cityGroupId, lang: IsNull() },
-      ],
+    let city: City | null = null;
+    city = await this.entityManager.findOne(City, {
+      where: { cityGroupId: business.cityGroupId, lang: this.appContext.getLang() },
     });
+    if (!city) {
+      city = await this.entityManager.findOne(City, {
+        where: { cityGroupId: business.cityGroupId, lang: IsNull() },
+      });
+    }
     if (city) business.city = city;
 
     return business;
