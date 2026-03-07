@@ -28,12 +28,13 @@ export class BusinessesService {
   }
 
   async findAll(): Promise<Business[]> {
-    return await this.entityManager.find(Business, {
-      order: { createdAt: 'DESC' },
-      relations: {
-        city: true,
-      },
-    });
+    return await this.entityManager
+      .createQueryBuilder(Business, 'business')
+      .leftJoinAndSelect(City, 'city', 'city.cityGroupId = business.cityGroupId AND (city.lang = :lang OR city.lang IS NULL)', {
+        lang: this.appContext.getLang(),
+      })
+      .orderBy('business.createdAt', 'DESC')
+      .getMany();
   }
 
   async findOneByLink(link: string): Promise<Business> {
