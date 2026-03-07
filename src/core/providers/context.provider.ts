@@ -2,14 +2,15 @@ import { Inject, Injectable, Scope } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import type { Request } from 'express';
 import { Business } from 'src/businesses/entities/business.entity';
+import { Membership } from 'src/memberships/entities/membership.entity';
 import { User } from 'src/users/entities/user.entity';
 import { MissingContextException } from '../exceptions/context.exception';
-import { Membership } from 'src/memberships/entities/membership.entity';
 
 interface RequestWithContext extends Request {
   user?: User;
   business?: Business;
   membership?: Membership;
+  lang?: string;
 }
 
 @Injectable({ scope: Scope.REQUEST })
@@ -18,6 +19,10 @@ export class AppContextProvider {
 
   getUser(): User | null {
     return this.request.user || null;
+  }
+
+  getLang(): string {
+    return this.request.lang || 'en';
   }
 
   getUserProperty<K extends keyof User>(key: K): User[K] | null {

@@ -1,13 +1,13 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { Request } from 'express';
-import { COOKIE_ACCESS_TOKEN } from '../constantes';
-import { EntityManager, In } from 'typeorm';
-import { InjectEntityManager } from '@nestjs/typeorm';
-import { User } from 'src/users/entities/user.entity';
-import { Membership } from 'src/memberships/entities/membership.entity';
-import { Business } from 'src/businesses/entities/business.entity';
 import { Reflector } from '@nestjs/core';
+import { JwtService } from '@nestjs/jwt';
+import { InjectEntityManager } from '@nestjs/typeorm';
+import { Request } from 'express';
+import { Business } from 'src/businesses/entities/business.entity';
+import { Membership } from 'src/memberships/entities/membership.entity';
+import { User } from 'src/users/entities/user.entity';
+import { EntityManager } from 'typeorm';
+import { COOKIE_ACCESS_TOKEN } from '../constantes';
 import { IS_PUBLIC_KEY } from '../decorators';
 
 @Injectable()
@@ -20,12 +20,14 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
+
+    request.lang = request.cookies?.lang;
+
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [context.getHandler(), context.getClass()]);
     if (isPublic) {
       return true;
     }
-
-    const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromCookie(request);
 
     if (!token) {
