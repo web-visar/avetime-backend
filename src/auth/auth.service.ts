@@ -5,7 +5,7 @@ import { InjectEntityManager } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Request } from 'express';
 import type { StringValue } from 'ms';
-import { extractTokenFromCookie } from 'src/core/helpers';
+import { extractTokenFromCookie, sleep } from 'src/core/helpers';
 import { AppContextProvider } from 'src/core/providers/context.provider';
 import { EntityManager } from 'typeorm';
 import { Membership } from '../memberships/entities/membership.entity';
@@ -97,6 +97,7 @@ export class AuthService {
   }
 
   async getProfile(request: Request): Promise<AuthenticatedUser> {
+    await sleep(2000); 
     try {
       const token = extractTokenFromCookie(request);
 
