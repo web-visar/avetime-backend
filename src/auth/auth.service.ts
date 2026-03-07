@@ -3,11 +3,13 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
+import { Request } from 'express';
 import type { StringValue } from 'ms';
+import { extractTokenFromCookie } from 'src/core/helpers';
 import { AppContextProvider } from 'src/core/providers/context.provider';
 import { EntityManager } from 'typeorm';
-import { User } from '../users/entities/user.entity';
 import { Membership } from '../memberships/entities/membership.entity';
+import { User } from '../users/entities/user.entity';
 import {
   DEFAULT_JWT_EXPIRES_IN,
   DEFAULT_JWT_REFRESH_EXPIRES_IN,
@@ -48,6 +50,7 @@ export class AuthService {
     const savedUser = await this.entityManager.save(user);
 
     return {
+      isAuthenticated: true,
       id: savedUser.id,
       email: savedUser.email,
       fullName: savedUser.fullName,
@@ -93,53 +96,47 @@ export class AuthService {
     }
   }
 
-  async validateAccessToken(accessToken: string): Promise<AuthenticatedUser> {
+  async getProfile(request: Request): Promise<AuthenticatedUser> {
     try {
-      const payload = await this.jwtService.verifyAsync<JwtPayload>(accessToken, {
+      const token = extractTokenFromCookie(request);
+
+      if (!token) {
+        return {
+          isAuthenticated: false,
+        };
+      }
+      const payload = await this.jwtService.verifyAsync<JwtPayload>(token, {
         secret: this.configService.get<string>(JWT_SECRET_KEY),
       });
-
       const user = await this.entityManager.findOne(User, {
         where: { id: payload.sub },
       });
 
       if (!user) {
-        throw new UnauthorizedException('User not found');
+        return {
+          isAuthenticated: false,
+        };
       }
 
+      const memberships = await this.entityManager.find(Membership, {
+        where: { userId: user.id },
+        select: ['role'],
+      });
+
+      const roles = Array.from(new Set(memberships.map((m) => m.role).filter((role): role is string => typeof role === 'string' && role.length > 0)));
+
       return {
+        isAuthenticated: true,
         id: user.id,
         email: user.email,
         fullName: user.fullName,
+        roles,
       };
     } catch {
-      throw new UnauthorizedException('Invalid access token');
+      return {
+        isAuthenticated: false,
+      };
     }
-  }
-
-  async getProfile(): Promise<AuthenticatedUser> {
-    const userId = this.appContext.requireUserId();
-    const user = await this.entityManager.findOne(User, {
-      where: { id: userId },
-    });
-
-    if (!user) {
-      throw new UnauthorizedException('User not found');
-    }
-
-    const memberships = await this.entityManager.find(Membership, {
-      where: { userId: user.id },
-      select: ['role'],
-    });
-
-    const roles = Array.from(new Set(memberships.map((m) => m.role).filter((role): role is string => typeof role === 'string' && role.length > 0)));
-
-    return {
-      id: user.id,
-      email: user.email,
-      fullName: user.fullName,
-      roles,
-    };
   }
 
   private async generateTokens(user: User): Promise<TokenPair> {

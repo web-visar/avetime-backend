@@ -77,8 +77,9 @@ export class AuthController {
   }
 
   @Get('me')
-  async getProfile() {
-    return this.authService.getProfile();
+  @Public()
+  async getProfile(@Req() request: Request) {
+    return this.authService.getProfile(request);
   }
 
   private setAuthCookies(response: Response, accessToken: string, refreshToken: string) {

@@ -16,8 +16,9 @@ export interface TokenPair {
 }
 
 export interface AuthenticatedUser {
-  id: string;
-  email: string;
-  fullName: string;
+  isAuthenticated: boolean;
+  id?: string;
+  email?: string;
+  fullName?: string;
   roles?: string[];
 }

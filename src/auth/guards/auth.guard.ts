@@ -2,12 +2,11 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { InjectEntityManager } from '@nestjs/typeorm';
-import { Request } from 'express';
 import { Business } from 'src/businesses/entities/business.entity';
+import { extractTokenFromCookie } from 'src/core/helpers';
 import { Membership } from 'src/memberships/entities/membership.entity';
 import { User } from 'src/users/entities/user.entity';
 import { EntityManager } from 'typeorm';
-import { COOKIE_ACCESS_TOKEN } from '../constantes';
 import { IS_PUBLIC_KEY } from '../decorators';
 
 @Injectable()
@@ -28,7 +27,7 @@ export class AuthGuard implements CanActivate {
     if (isPublic) {
       return true;
     }
-    const token = this.extractTokenFromCookie(request);
+    const token = extractTokenFromCookie(request);
 
     if (!token) {
       throw new UnauthorizedException('Missing access token');
@@ -60,9 +59,5 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException('Invalid access token');
     }
     return true;
-  }
-
-  private extractTokenFromCookie(request: Request): string | undefined {
-    return request.cookies?.[COOKIE_ACCESS_TOKEN];
   }
 }
