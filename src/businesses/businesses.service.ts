@@ -1,13 +1,18 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
-import { EntityManager } from 'typeorm';
+import { EntityManager, IsNull } from 'typeorm';
 import { CreateBusinessDto } from './dto/create-business.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
 import { Business } from './entities/business.entity';
+import { AppContextProvider } from 'src/core/providers/context.provider';
+import { City } from 'src/cities/entities/city.entity';
 
 @Injectable()
 export class BusinessesService {
-  constructor(@InjectEntityManager() private readonly entityManager: EntityManager) {}
+  constructor(
+    @InjectEntityManager() private readonly entityManager: EntityManager,
+    private readonly appContext: AppContextProvider,
+  ) {}
 
   async create(createBusinessDto: CreateBusinessDto): Promise<Business> {
     const existing = await this.entityManager.findOne(Business, {
@@ -34,15 +39,18 @@ export class BusinessesService {
   async findOneByLink(link: string): Promise<Business> {
     const business = await this.entityManager.findOne(Business, {
       where: { link },
-      relations: {
-        city: true,
-      },
     });
 
     if (!business) {
       throw new NotFoundException(`Business with link '${link}' not found`);
     }
-
+    const city = await this.entityManager.findOne(City, {
+      where: [
+        { cityGroupId: business.cityGroupId, lang: this.appContext.getLang() },
+        { cityGroupId: business.cityGroupId, lang: IsNull() },
+      ],
+    });
+    if (city) business.city = city;
     return business;
   }
 
