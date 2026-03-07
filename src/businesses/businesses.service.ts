@@ -66,6 +66,14 @@ export class BusinessesService {
       throw new NotFoundException(`Business with ID '${id}' not found`);
     }
 
+    const city = await this.entityManager.findOne(City, {
+      where: [
+        { cityGroupId: business.cityGroupId, lang: this.appContext.getLang() },
+        { cityGroupId: business.cityGroupId, lang: IsNull() },
+      ],
+    });
+    if (city) business.city = city;
+
     return business;
   }
 
