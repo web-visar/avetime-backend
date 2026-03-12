@@ -7,8 +7,8 @@ export class ServiceCategory {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 50 })
-  code: string; // Unique identifier (e.g., 'haircut', 'coloring')
+  @Column({ type: 'varchar', length: 50, unique: true })
+  code: string;
 
   @Column({ type: 'varchar', length: 100 })
   name: string; // Translated name

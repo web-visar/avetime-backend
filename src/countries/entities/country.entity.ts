@@ -8,7 +8,7 @@ export class Country {
   id: string;
 
   @Column({ type: 'varchar', length: 2 })
-  @Index()
+  @Index({ unique: true })
   code: string;
 
   @Column({ type: 'varchar', length: 100 })

@@ -1,10 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, ManyToMany, Index } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Business } from '../../businesses/entities/business.entity';
 import { Employee } from '../../employees/entities/employee.entity';
 import { ServiceCategory } from '../../service-categories/entities/service-category.entity';
 
 @Entity('t_services')
-@Index(['businessId', 'name'])
 export class Service {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -30,14 +29,8 @@ export class Service {
   @Index()
   categoryLang: string; // Language for the category reference
 
-  @ManyToOne(() => ServiceCategory, (serviceCategory) => serviceCategory.services, {
-    nullable: true,
-    createForeignKeyConstraints: false,
-  })
-  @JoinColumn([
-    { name: 'categoryCode', referencedColumnName: 'code' },
-    { name: 'categoryLang', referencedColumnName: 'lang' },
-  ])
+  @ManyToOne(() => ServiceCategory, (serviceCategory) => serviceCategory.services, { onDelete: 'SET NULL', nullable: true })
+  @JoinColumn([{ name: 'categoryCode', referencedColumnName: 'code' }])
   category: ServiceCategory;
 
   @Column({ type: 'int' })
