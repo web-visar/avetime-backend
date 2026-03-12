@@ -22,10 +22,10 @@ export class Business {
   description: string;
 
   @Column({ type: 'uuid' })
-  cityGroupId: string;
+  cityId: string;
 
   @ManyToOne(() => City, { onDelete: 'RESTRICT', createForeignKeyConstraints: false })
-  @JoinColumn([{ name: 'cityGroupId', referencedColumnName: 'cityGroupId' }])
+  @JoinColumn([{ name: 'cityId', referencedColumnName: 'id' }])
   city: City;
 
   @Column({ length: 255 })

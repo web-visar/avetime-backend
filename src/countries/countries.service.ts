@@ -20,7 +20,6 @@ export class CountriesService {
       text: country.name,
       value: country.code,
       meta: {
-        nativeName: country.nativeName,
         valueIs: 'code',
       },
     }));

@@ -12,12 +12,6 @@ export class CreateServiceCategoryDto {
   name: string;
 
   @IsString()
-  @IsNotEmpty()
-  @MinLength(2)
-  @MaxLength(5)
-  lang: string;
-
-  @IsString()
   @IsOptional()
   description?: string;
 

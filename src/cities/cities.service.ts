@@ -1,37 +1,46 @@
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { IAutocompleteOption } from 'src/core/interfaces/autocomplete-option.interface';
+import { AppContextProvider } from 'src/core/providers/context.provider';
 import { EntityManager } from 'typeorm';
 import { City } from './entities/city.entity';
 
 @Injectable()
 export class CitiesService {
-  constructor(@InjectEntityManager() private readonly entityManager: EntityManager) {}
+  constructor(
+    @InjectEntityManager() private readonly entityManager: EntityManager,
+    private readonly appContext: AppContextProvider,
+  ) {}
 
-  async search(query: string, lang: string): Promise<IAutocompleteOption[]> {
-    console.log('Searching cities with query:', query, 'and lang:', lang);
+  async search(query: string): Promise<IAutocompleteOption[]> {
+    const lang = this.appContext.getLang();
     const cities = await this.entityManager
       .createQueryBuilder(City, 'city')
-      .leftJoinAndSelect('city.country', 'country', 'country.code = city.countryCode AND country.lang = :countryLang', { countryLang: lang })
-      .where('city.lang = :lang OR city.lang IS NULL', { lang })
+      .leftJoinAndSelect('city.country', 'country')
       .addSelect('word_similarity(city.name, :query)', 'similarity')
       .setParameter('query', query)
       .orderBy('similarity', 'DESC')
       .take(10)
-      .getRawMany();
+      .getMany();
 
-    return cities.map((data) => ({
-      text: data.city_name,
-      value: data.city_cityGroupId,
+    return cities.map((city) => ({
+      text: city.translations?.[lang] || city.name,
+      value: city.id,
       meta: {
-        countryName: data.country_name,
-        countryCode: data.country_code,
-        valueIs: 'cityGroupId',
+        countryName: city.country?.translations?.[lang] || city.country?.name,
+        countryCode: city.countryCode,
+        valueIs: 'cityId',
       },
     }));
   }
 
-  findAll(lang: string) {
-    return this.entityManager.find(City, { where: { lang } });
+  async findAll() {
+    const lang = this.appContext.getLang();
+    const cities = await this.entityManager.find(City, { relations: ['country'] });
+    return cities.map((city) => {
+      city.name = city.translations?.[lang] || city.name;
+      city.country.name = city.country?.translations?.[lang] || city.country?.name;
+      return city;
+    });
   }
 }

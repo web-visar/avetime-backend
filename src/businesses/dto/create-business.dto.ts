@@ -17,7 +17,7 @@ export class CreateBusinessDto {
 	address: string;
 
 	@IsUUID()
-	cityGroupId: string;
+	cityId: string;
 
     @IsString()
     @MinLength(10)

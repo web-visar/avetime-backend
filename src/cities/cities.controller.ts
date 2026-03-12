@@ -8,13 +8,13 @@ export class CitiesController {
 
   @Public()
   @Get('search')
-  search(@Query('query') query: string, @Query('lang') lang: string) {
-    return this.citiesService.search(query, lang);
+  search(@Query('query') query: string) {
+    return this.citiesService.search(query);
   }
 
   @Public()
   @Get()
-  findAll(@Query('lang') lang: string) {
-    return this.citiesService.findAll(lang);
+  findAll() {
+    return this.citiesService.findAll();
   }
 }

@@ -1,10 +1,10 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
+import { IAutocompleteOption } from 'src/core/interfaces/autocomplete-option.interface';
 import { EntityManager } from 'typeorm';
 import { CreateServiceCategoryDto } from './dto/create-service-category.dto';
 import { UpdateServiceCategoryDto } from './dto/update-service-category.dto';
 import { ServiceCategory } from './entities/service-category.entity';
-import { IAutocompleteOption } from 'src/core/interfaces/autocomplete-option.interface';
 
 @Injectable()
 export class ServiceCategoriesService {
@@ -15,13 +15,12 @@ export class ServiceCategoriesService {
     const existing = await this.entityManager.findOne(ServiceCategory, {
       where: {
         code: createServiceCategoryDto.code,
-        lang: createServiceCategoryDto.lang,
       },
     });
 
     if (existing) {
       throw new ConflictException(
-        `Service category with code '${createServiceCategoryDto.code}' and language '${createServiceCategoryDto.lang}' already exists`,
+        `Service category with code '${createServiceCategoryDto.code}' already exists`,
       );
     }
 
@@ -52,16 +51,18 @@ export class ServiceCategoriesService {
 
   async findAll(lang: string): Promise<ServiceCategory[]> {
     const query = this.entityManager.createQueryBuilder(ServiceCategory, 'category');
-
-    if (lang) {
-      query.where('category.lang = :lang', { lang });
-    }
-
     query.andWhere('category.isActive = :isActive', { isActive: true });
     query.orderBy('category.sortOrder', 'ASC');
     query.addOrderBy('category.name', 'ASC');
+    const categories = await query.getMany();
 
-    return await query.getMany();
+    // If lang is provided, filter translations
+
+    return categories.map((category) => {
+      category.name = category.translations?.[lang] || category.name;
+      category.description = category.descriptionTranslations?.[lang] || category.description;
+      return category;
+    });
   }
 
   async findOne(id: string): Promise<ServiceCategory> {
@@ -76,22 +77,9 @@ export class ServiceCategoriesService {
     return serviceCategory;
   }
 
-  async findByCodeAndLang(code: string, lang: string): Promise<ServiceCategory> {
-    const serviceCategory = await this.entityManager.findOne(ServiceCategory, {
-      where: { code, lang },
-    });
-
-    if (!serviceCategory) {
-      throw new NotFoundException(`Service category with code '${code}' and language '${lang}' not found`);
-    }
-
-    return serviceCategory;
-  }
-
   async findByCode(code: string): Promise<ServiceCategory[]> {
     return await this.entityManager.find(ServiceCategory, {
       where: { code },
-      order: { lang: 'ASC' },
     });
   }
 

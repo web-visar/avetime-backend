@@ -8,7 +8,6 @@ export class ServiceCategory {
   id: string;
 
   @Column({ type: 'varchar', length: 50 })
-  @Index()
   code: string; // Unique identifier (e.g., 'haircut', 'coloring')
 
   @Column({ type: 'varchar', length: 100 })
