@@ -28,6 +28,7 @@ export class BusinessesService {
 
   async findAll(): Promise<Business[]> {
     const lang = this.appContext.getLang();
+    console.log(`Finding business lang: ${lang}`);
     const businesses = await this.entityManager.find(Business, {
       order: { createdAt: 'DESC' },
       relations: { city: true },
@@ -40,7 +41,6 @@ export class BusinessesService {
 
   async findOneByLink(link: string): Promise<Business> {
     const lang = this.appContext.getLang();
-    console.log(`Finding business with link: ${link} and lang: ${lang}`);
     const business = await this.entityManager.findOne(Business, {
       where: { link },
       relations: { city: true },
