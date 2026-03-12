@@ -1,25 +1,21 @@
 import { City } from 'src/cities/entities/city.entity';
+import type { TranslationEntry } from 'src/core/interfaces';
 import { Column, CreateDateColumn, Entity, Index, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('t_countries')
-@Index(['code', 'lang'], { unique: true })
 export class Country {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ type: 'varchar', length: 2 })
   @Index()
-  code: string; // ISO 3166-1 alpha-2 code
+  code: string;
 
   @Column({ type: 'varchar', length: 100 })
-  name: string; // Translated name
+  name: string;
 
-  @Column({ type: 'varchar', length: 5 })
-  @Index()
-  lang: string; // ISO 639-1 language code (e.g., 'en', 'fr', 'de')
-
-  @Column({ type: 'varchar', length: 100, nullable: true })
-  nativeName: string; // Name in native language
+  @Column({ type: 'jsonb', nullable: true })
+  translations: TranslationEntry;
 
   @OneToMany(() => City, (city) => city.country)
   cities: City[];

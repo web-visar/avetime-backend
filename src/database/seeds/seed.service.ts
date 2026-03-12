@@ -99,13 +99,13 @@ export class SeedService {
 
     for (const countryData of countriesData) {
       const existing = await this.entityManager.findOne(Country, {
-        where: { code: countryData.code, lang: countryData.lang },
+        where: { code: countryData.code },
       });
 
       if (!existing) {
         const country = this.entityManager.create(Country, countryData);
         await this.entityManager.save(country);
-        this.logger.log(`Created country: ${countryData.name} (${countryData.lang})`);
+        this.logger.log(`Created country: ${countryData.name}`);
       }
     }
 
@@ -119,14 +119,13 @@ export class SeedService {
       const existing = await this.entityManager.findOne(Timezone, {
         where: {
           tzCode: timezoneData.tzCode,
-          lang: timezoneData.lang,
         },
       });
 
       if (!existing) {
         const timezone = this.entityManager.create(Timezone, timezoneData);
         await this.entityManager.save(timezone);
-        this.logger.log(`Created timezone: ${timezoneData.tzCode} (${timezoneData.lang})`);
+        this.logger.log(`Created timezone: ${timezoneData.tzCode}`);
       }
     }
 
@@ -142,12 +141,6 @@ export class SeedService {
         countryCode: cityData.countryCode,
       };
 
-      if (cityData.lang !== null) {
-        whereClause.lang = cityData.lang;
-      } else {
-        whereClause.lang = null;
-      }
-
       const existing = await this.entityManager.findOne(City, {
         where: whereClause,
       });
@@ -155,7 +148,7 @@ export class SeedService {
       if (!existing) {
         const city = this.entityManager.create(City, cityData);
         await this.entityManager.save(city);
-        this.logger.log(`Created city: ${cityData.name}, ${cityData.countryCode} (${cityData.lang || 'no lang'})`);
+        this.logger.log(`Created city: ${cityData.name}, ${cityData.countryCode}`);
       }
     }
 

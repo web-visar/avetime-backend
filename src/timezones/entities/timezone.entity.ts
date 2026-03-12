@@ -1,18 +1,8 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Country } from '../../countries/entities/country.entity';
+import type { TranslationEntry } from 'src/core/interfaces';
 
 @Entity('t_timezones')
-@Index(['tzCode', 'lang'], { unique: true })
-@Index(['countryCode', 'lang'])
 export class Timezone {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -24,22 +14,15 @@ export class Timezone {
   @Column({ type: 'varchar', length: 200 })
   name: string;
 
-  @Column({ type: 'varchar', length: 5 })
-  @Index()
-  lang: string;
+  @Column({ type: 'jsonb' })
+  translations: TranslationEntry;
 
   @Column({ type: 'varchar', length: 2 })
   @Index()
   countryCode: string;
 
-  @ManyToOne(() => Country, {
-    nullable: true,
-    createForeignKeyConstraints: false,
-  })
-  @JoinColumn([
-    { name: 'countryCode', referencedColumnName: 'code' },
-    { name: 'lang', referencedColumnName: 'lang' },
-  ])
+  @ManyToOne(() => Country, { onDelete: 'CASCADE' })
+  @JoinColumn([{ name: 'countryCode', referencedColumnName: 'code' }])
   country: Country;
 
   @CreateDateColumn()
