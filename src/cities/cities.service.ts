@@ -23,15 +23,19 @@ export class CitiesService {
       .take(10)
       .getMany();
 
-    return cities.map((city) => ({
-      text: city.translations?.[lang] || city.name,
-      value: city.id,
-      meta: {
-        countryName: city.country?.translations?.[lang] || city.country?.name,
-        countryCode: city.countryCode,
-        valueIs: 'cityId',
-      },
-    }));
+    return cities.map((city) => {
+      const countryName = city.country?.translations?.[lang] || city.country?.name || '';
+      const cityName = city.translations?.[lang] || city.name;
+      return {
+        text: cityName,
+        value: city.id,
+        meta: {
+          countryName: countryName,
+          countryCode: city.countryCode,
+          valueIs: 'cityId',
+        },
+      };
+    });
   }
 
   async findAll() {

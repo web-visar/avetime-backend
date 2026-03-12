@@ -16,15 +16,15 @@ export class ServiceCategoriesController {
 
   @Get()
   @Public()
-  findAll(@Query('lang') lang: string) {
-    console.log('Fetching service categories with lang:', lang);
-    return this.serviceCategoriesService.findAll(lang || 'en');
+  findAll() {
+    console.log('Fetching service categories');
+    return this.serviceCategoriesService.findAll();
   }
 
   @Public()
   @Get('search')
-  search(@Query('query') query: string, @Query('lang') lang: string) {
-    return this.serviceCategoriesService.search(query, lang);
+  search(@Query('query') query: string) {
+    return this.serviceCategoriesService.search(query);
   }
 
   @Get(':id')

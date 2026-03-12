@@ -6,7 +6,12 @@ import { Response, Request } from 'express';
 export class CookiesService {
   constructor(private readonly configService: ConfigService) {}
   setCookie(name: string, value: string, res: Response) {
-    res.cookie(name, value, { httpOnly: true, secure: this.configService.get('NODE_ENV') === 'production', sameSite: 'strict' });
+    res.cookie(name, value, {
+      httpOnly: true,
+      secure: this.configService.get('NODE_ENV') === 'production',
+      sameSite: 'strict',
+      maxAge: 365 * 24 * 60 * 60 * 1000,
+    });
   }
 
   clearCookie(name: string, res: Response) {

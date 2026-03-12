@@ -39,10 +39,15 @@ export class BusinessesService {
   }
 
   async findOneByLink(link: string): Promise<Business> {
+    const lang = this.appContext.getLang();
+    console.log(`Finding business with link: ${link} and lang: ${lang}`);
     const business = await this.entityManager.findOne(Business, {
       where: { link },
       relations: { city: true },
     });
+    if (business) {
+      business.city.name = business.city.translations?.[lang] || business.city.name;
+    }
 
     if (!business) {
       throw new NotFoundException(`Business with link '${link}' not found`);

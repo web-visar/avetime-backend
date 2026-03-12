@@ -5,7 +5,7 @@ import { Public } from 'src/auth/decorators';
 
 @Controller('cookies')
 @Public()
-export class CookiesController {  
+export class CookiesController {
   constructor(private readonly cookiesService: CookiesService) {}
 
   @Post('set')

@@ -1,6 +1,7 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { IAutocompleteOption } from 'src/core/interfaces/autocomplete-option.interface';
+import { AppContextProvider } from 'src/core/providers/context.provider';
 import { EntityManager } from 'typeorm';
 import { CreateServiceCategoryDto } from './dto/create-service-category.dto';
 import { UpdateServiceCategoryDto } from './dto/update-service-category.dto';
@@ -8,7 +9,10 @@ import { ServiceCategory } from './entities/service-category.entity';
 
 @Injectable()
 export class ServiceCategoriesService {
-  constructor(@InjectEntityManager() private readonly entityManager: EntityManager) {}
+  constructor(
+    @InjectEntityManager() private readonly entityManager: EntityManager,
+    private readonly appContext: AppContextProvider,
+  ) {}
 
   async create(createServiceCategoryDto: CreateServiceCategoryDto): Promise<ServiceCategory> {
     // Check if category with same code and language already exists
@@ -19,20 +23,18 @@ export class ServiceCategoriesService {
     });
 
     if (existing) {
-      throw new ConflictException(
-        `Service category with code '${createServiceCategoryDto.code}' already exists`,
-      );
+      throw new ConflictException(`Service category with code '${createServiceCategoryDto.code}' already exists`);
     }
 
     const serviceCategory = this.entityManager.create(ServiceCategory, createServiceCategoryDto);
     return await this.entityManager.save(serviceCategory);
   }
 
-  async search(query: string, lang: string): Promise<IAutocompleteOption[]> {
+  async search(query: string): Promise<IAutocompleteOption[]> {
+    const lang = this.appContext.getLang() || 'en';
     const options = await this.entityManager
       .createQueryBuilder(ServiceCategory, 'category')
-      .where('category.lang = :lang', { lang })
-      .andWhere('category.isActive = :isActive', { isActive: true })
+      .where('category.isActive = :isActive', { isActive: true })
       .addSelect('word_similarity(category.name, :query)', 'similarity')
       .setParameter('query', query)
       .orderBy('similarity', 'DESC')
@@ -40,16 +42,21 @@ export class ServiceCategoriesService {
       .take(10)
       .getMany();
 
-    return options.map((category) => ({
-      value: category.code,
-      text: category.name,
-      meta: {
-        valueId: 'code',
-      },
-    }));
+    return options.map((category) => {
+      const name = category.translations?.[lang] || category.name;
+      return {
+        value: category.id,
+        text: name,
+        meta: {
+          code: category.code,
+          valueIs: 'serviceCategoryId',
+        },
+      };
+    });
   }
 
-  async findAll(lang: string): Promise<ServiceCategory[]> {
+  async findAll(): Promise<ServiceCategory[]> {
+    const lang = this.appContext.getLang() || 'en';
     const query = this.entityManager.createQueryBuilder(ServiceCategory, 'category');
     query.andWhere('category.isActive = :isActive', { isActive: true });
     query.orderBy('category.sortOrder', 'ASC');
@@ -66,6 +73,7 @@ export class ServiceCategoriesService {
   }
 
   async findOne(id: string): Promise<ServiceCategory> {
+    const lang = this.appContext.getLang() || 'en';
     const serviceCategory = await this.entityManager.findOne(ServiceCategory, {
       where: { id },
     });
@@ -74,12 +82,20 @@ export class ServiceCategoriesService {
       throw new NotFoundException(`Service category with ID '${id}' not found`);
     }
 
+    serviceCategory.name = serviceCategory.translations?.[lang] || serviceCategory.name;
+    serviceCategory.description = serviceCategory.descriptionTranslations?.[lang] || serviceCategory.description;
     return serviceCategory;
   }
 
   async findByCode(code: string): Promise<ServiceCategory[]> {
-    return await this.entityManager.find(ServiceCategory, {
+    const lang = this.appContext.getLang() || 'en';
+    const serviceCategories = await this.entityManager.find(ServiceCategory, {
       where: { code },
+    });
+    return serviceCategories.map((category) => {
+      category.name = category.translations?.[lang] || category.name;
+      category.description = category.descriptionTranslations?.[lang] || category.description;
+      return category;
     });
   }
 
