@@ -18,7 +18,7 @@ export class City {
   @Index()
   countryCode: string;
 
-  @ManyToOne(() => Country, (country) => country.cities, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Country, (country) => country.cities, { onDelete: 'RESTRICT' })
   @JoinColumn([{ name: 'countryCode', referencedColumnName: 'code' }])
   country: Country;
 

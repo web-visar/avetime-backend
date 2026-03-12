@@ -24,7 +24,7 @@ export class Business {
   @Column({ type: 'uuid' })
   cityId: string;
 
-  @ManyToOne(() => City, { onDelete: 'RESTRICT', createForeignKeyConstraints: false })
+  @ManyToOne(() => City, { onDelete: 'RESTRICT' })
   @JoinColumn([{ name: 'cityId', referencedColumnName: 'id' }])
   city: City;
 

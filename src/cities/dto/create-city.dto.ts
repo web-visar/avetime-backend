@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString, IsUUID, Length } from 'class-validator';
 
 export class CreateCityDto {
   @IsString()
@@ -11,10 +11,8 @@ export class CreateCityDto {
   @Length(2, 2)
   countryCode: string; // ISO 3166-1 alpha-2 code
 
-  @IsString()
-  @IsNotEmpty()
-  @Length(2, 5)
-  lang: string; // ISO 639-1 language code
+  @IsUUID('4')
+  cityId: string;
 
   @IsBoolean()
   @IsOptional()
