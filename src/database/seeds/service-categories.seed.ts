@@ -1,15 +1,6 @@
-import { TranslationEntry } from 'src/core/interfaces';
+import { ServiceCategory } from 'src/service-categories/entities/service-category.entity';
 
-export const serviceCategoriesData: {
-  code: string;
-  name: string;
-  translations: TranslationEntry | null;
-  description: string;
-  descriptionTranslations: TranslationEntry | null;
-  icon: string;
-  sortOrder: number;
-  isActive: boolean;
-}[] = [
+export const serviceCategoriesData: Partial<ServiceCategory>[] = [
   {
     code: 'haircut',
     name: 'Haircut',

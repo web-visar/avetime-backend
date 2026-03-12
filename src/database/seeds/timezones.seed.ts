@@ -1,6 +1,6 @@
-import { TranslationEntry } from 'src/core/interfaces';
+import { Timezone } from 'src/timezones/entities/timezone.entity';
 
-export const timezonesData: { tzCode: string; name: string; translations: TranslationEntry; countryCode: string }[] = [
+export const timezonesData: Partial<Timezone>[] = [
   // Switzerland - CET/CEST (UTC+1/+2)
   {
     tzCode: 'Europe/Zurich',

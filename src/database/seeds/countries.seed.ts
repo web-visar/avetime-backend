@@ -1,6 +1,6 @@
-import { TranslationEntry } from 'src/core/interfaces';
+import { Country } from 'src/countries/entities/country.entity';
 
-export const countriesData: { code: string; name: string; translations: TranslationEntry; isActive: boolean }[] = [
+export const countriesData: Partial<Country>[] = [
   {
     code: 'CH',
     name: 'Switzerland',

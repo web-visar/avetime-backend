@@ -1,6 +1,6 @@
-import { TranslationEntry } from 'src/core/interfaces';
+import { City } from 'src/cities/entities/city.entity';
 
-export const citiesData: { name: string; countryCode: string; translations: TranslationEntry | null; isActive: boolean }[] = [
+export const citiesData: Partial<City>[] = [
   // France cities (no translations — local name only)
   { name: 'Saint-Julien-en-Genevois', countryCode: 'FR', translations: null, isActive: true },
   { name: 'Collonges-sous-Salève', countryCode: 'FR', translations: null, isActive: true },
