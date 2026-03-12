@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Country } from '../../countries/entities/country.entity';
 import type { TranslationEntry } from 'src/core/interfaces';
+import { Expose } from 'class-transformer';
 
 @Entity('t_timezones')
 export class Timezone {
@@ -30,4 +31,8 @@ export class Timezone {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  displayName(lang: string): string {
+    return this.translations[lang] || this.name;
+  }
 }

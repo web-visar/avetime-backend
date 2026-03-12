@@ -162,14 +162,13 @@ export class SeedService {
       const existing = await this.entityManager.findOne(ServiceCategory, {
         where: {
           code: categoryData.code,
-          lang: categoryData.lang,
         },
       });
 
       if (!existing) {
         const serviceCategory = this.entityManager.create(ServiceCategory, categoryData);
         await this.entityManager.save(serviceCategory);
-        this.logger.log(`Created service category: ${categoryData.name} (${categoryData.lang})`);
+        this.logger.log(`Created service category: ${categoryData.name} `);
       }
     }
 
