@@ -28,7 +28,6 @@ export class BusinessesService {
 
   async findAll(): Promise<Business[]> {
     const lang = this.appContext.getLang();
-    console.log(`Finding business lang: ${lang}`);
     const businesses = await this.entityManager.find(Business, {
       order: { createdAt: 'DESC' },
       relations: { city: true },
