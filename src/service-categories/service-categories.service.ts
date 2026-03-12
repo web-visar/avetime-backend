@@ -31,11 +31,11 @@ export class ServiceCategoriesService {
   }
 
   async search(query: string): Promise<IAutocompleteOption[]> {
-    const lang = this.appContext.getLang() || 'en';
+    const lang = this.appContext.getLang();
     const options = await this.entityManager
       .createQueryBuilder(ServiceCategory, 'category')
       .where('category.isActive = :isActive', { isActive: true })
-      .addSelect('word_similarity(category.name, :query)', 'similarity')
+      .addSelect(`word_similarity(category.translations->>'${lang}', :query)`, 'similarity')
       .setParameter('query', query)
       .orderBy('similarity', 'DESC')
       .addOrderBy('category.sortOrder', 'ASC')
@@ -56,14 +56,12 @@ export class ServiceCategoriesService {
   }
 
   async findAll(): Promise<ServiceCategory[]> {
-    const lang = this.appContext.getLang() || 'en';
+    const lang = this.appContext.getLang();
     const query = this.entityManager.createQueryBuilder(ServiceCategory, 'category');
     query.andWhere('category.isActive = :isActive', { isActive: true });
     query.orderBy('category.sortOrder', 'ASC');
     query.addOrderBy('category.name', 'ASC');
     const categories = await query.getMany();
-
-    // If lang is provided, filter translations
 
     return categories.map((category) => {
       category.name = category.translations?.[lang] || category.name;
@@ -73,7 +71,7 @@ export class ServiceCategoriesService {
   }
 
   async findOne(id: string): Promise<ServiceCategory> {
-    const lang = this.appContext.getLang() || 'en';
+    const lang = this.appContext.getLang();
     const serviceCategory = await this.entityManager.findOne(ServiceCategory, {
       where: { id },
     });
@@ -88,7 +86,7 @@ export class ServiceCategoriesService {
   }
 
   async findByCode(code: string): Promise<ServiceCategory[]> {
-    const lang = this.appContext.getLang() || 'en';
+    const lang = this.appContext.getLang();
     const serviceCategories = await this.entityManager.find(ServiceCategory, {
       where: { code },
     });
