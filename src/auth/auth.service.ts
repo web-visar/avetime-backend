@@ -172,7 +172,7 @@ export class AuthService {
   getAccessTokenCookieOptions(isProduction: boolean) {
     return {
       ...this.getCookieOptions(isProduction),
-      maxAge: isProduction ? 15 * 60 * 1000 : 30 * 1000, // 15 minutes in production, 30 seconds in development
+      maxAge: isProduction ? 24 * 60 * 60 * 1000 : 30 * 1000, // 24 hours in production, 30 seconds in development
     };
   }
 
