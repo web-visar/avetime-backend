@@ -172,14 +172,14 @@ export class AuthService {
   getAccessTokenCookieOptions(isProduction: boolean) {
     return {
       ...this.getCookieOptions(isProduction),
-      maxAge: 15 * 60 * 1000, // 15 minutes
+      maxAge: isProduction ? 15 * 60 * 1000 : 30 * 1000, // 15 minutes in production, 30 seconds in development
     };
   }
 
   getRefreshTokenCookieOptions(isProduction: boolean) {
     return {
       ...this.getCookieOptions(isProduction),
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in production
     };
   }
 }
