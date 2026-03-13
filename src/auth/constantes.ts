@@ -7,5 +7,5 @@ export const JWT_REFRESH_EXPIRES_IN_KEY = 'JWT_REFRESH_EXPIRES_IN';
 export const COOKIE_ACCESS_TOKEN = 'access_token';
 export const COOKIE_REFRESH_TOKEN = 'refresh_token';
 
-export const DEFAULT_JWT_EXPIRES_IN = '15m';
+export const DEFAULT_JWT_EXPIRES_IN = '24h';
 export const DEFAULT_JWT_REFRESH_EXPIRES_IN = '7d';
