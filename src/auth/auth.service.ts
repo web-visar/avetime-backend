@@ -6,7 +6,6 @@ import * as bcrypt from 'bcrypt';
 import { Request } from 'express';
 import type { StringValue } from 'ms';
 import { extractTokenFromCookie } from 'src/core/helpers';
-import { AppContextProvider } from 'src/core/providers/context.provider';
 import { EntityManager } from 'typeorm';
 import { Membership } from '../memberships/entities/membership.entity';
 import { User } from '../users/entities/user.entity';
@@ -27,7 +26,6 @@ export class AuthService {
     private readonly jwtService: JwtService,
     @InjectEntityManager() private readonly entityManager: EntityManager,
     private readonly configService: ConfigService,
-    private readonly appContext: AppContextProvider,
   ) {}
 
   async register(registerDto: RegisterDto): Promise<AuthenticatedUser> {
@@ -167,7 +165,7 @@ export class AuthService {
       httpOnly: true,
       secure: isProduction,
       sameSite: isProduction ? ('strict' as const) : ('lax' as const),
-      path: '/',
+      domain: isProduction ? '.avetime.com' : undefined,
     };
   }
 
