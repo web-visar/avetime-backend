@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req, Res } from '@nestjs/common';
 import type { Response, Request } from 'express';
 import { CookiesService } from './cookies.service';
 import { Public } from 'src/auth/decorators';
@@ -20,8 +20,8 @@ export class CookiesController {
     return { success: true };
   }
 
-  @Post('get')
-  getCookie(@Body('name') name: string, @Req() req: Request) {
+  @Get('get')
+  getCookie(@Query('name') name: string, @Req() req: Request) {
     const cookie = this.cookiesService.getCookie(name, req);
     return { value: cookie };
   }
